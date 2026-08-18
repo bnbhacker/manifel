@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MANIFEL — every trade feeds the Manifesto</title>
+<meta name="description" content="MANIFEL is a token on Robinhood Chain. Its 3% tax fills a public vault. The vault buys the token's own GMGN Manifesto — again and again, louder each time.">
+<link rel="icon" href="brand/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #121212;
+    --panel: #1b1b1b;
+    --panel-2: #242424;
+    --line: rgba(255, 255, 255, .08);
+    --text: #f5f5f5;
+    --dim: #9ba1a6;
+    --green: #46b87d;
+    --green-light: #69cf8d;
+    --green-tint: rgba(70, 184, 125, .12);
+    --sans: "Inter", "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+  ::selection { background: var(--green); color: #0f1511; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- top bar ---------- */
+  .top { display: flex; align-items: center; gap: 14px; padding: 18px 0; }
+  .mark {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 19px; letter-spacing: -.01em;
+    text-decoration: none;
+  }
+  .mark img { width: 30px; height: 30px; border-radius: 7px; }
+  .chip {
+    font-family: var(--mono); font-size: 12px; color: var(--dim);
+    border: 1px solid var(--line); padding: 5px 10px; border-radius: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40vw;
+  }
+  .top .spacer { flex: 1; }
+  .btn {
+    font-family: var(--sans); font-weight: 700; font-size: 13.5px;
+    text-decoration: none; display: inline-block;
+    padding: 10px 16px; border-radius: 8px;
+    border: 1px solid var(--line); color: var(--text); background: transparent;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .btn:hover { border-color: var(--dim); }
+  .btn.solid { background: var(--green); border-color: var(--green); color: #0f1511; }
+  .btn.solid:hover { background: var(--green-light); border-color: var(--green-light); }
+  .soon-tag {
+    display: inline-block; vertical-align: middle;
+    margin-left: 7px; padding: 2px 6px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+    background: var(--green-tint); color: var(--green-light); border-radius: 4px;
+  }
+
+  /* ---------- marquee ---------- */
+  .marquee {
+    background: var(--panel);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    overflow: hidden; white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-block; white-space: nowrap; padding: 8px 0;
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em;
+    color: var(--green-light);
+    animation: slide 30s linear infinite;
+  }
+  .marquee-track span { margin-right: 3.5em; }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 64px 0 32px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em;
+    color: var(--green); margin-bottom: 18px;
+  }
+  h1 {
+    font-weight: 800; letter-spacing: -.02em;
+    font-size: clamp(38px, 6vw, 68px);
+    line-height: 1.04; max-width: 15em;
+  }
+  h1 .g { color: var(--green); }
+  .hero p.lede { margin-top: 22px; max-width: 600px; color: var(--dim); font-size: 15.5px; }
+  .hero p.lede b { color: var(--text); font-weight: 600; }
+
+  /* ---------- meter ---------- */
+  .meter-panel {
+    margin-top: 48px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(24px, 4vw, 40px);
+  }
+  .meter-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; }
+  .meter-title { font-weight: 700; font-size: 17px; }
+  .meter-sub { font-size: 13px; color: var(--dim); }
+  .togo {
+    margin: 18px 0 4px;
+    display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+  }
+  .togo #togo-num {
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(48px, 8vw, 88px); line-height: 1;
+    color: var(--green-light); letter-spacing: -.02em;
+  }
+  .togo small {
+    font-size: 13.5px; color: var(--dim); font-weight: 500;
+    max-width: 240px; line-height: 1.4;
+  }
+  .gauge {
+    position: relative; height: 16px; margin-top: 22px;
+    background: var(--panel-2); border-radius: 8px; overflow: hidden;
+  }
+  .gauge-fill {
+    position: absolute; inset: 0 auto 0 0; width: 0%;
+    background: linear-gradient(90deg, var(--green), var(--green-light));
+    border-radius: 8px;
+    transition: width 1.4s cubic-bezier(.22, 1, .3, 1);
+  }
+  .gauge-scale {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 12.5px; color: var(--dim);
+    margin-top: 10px;
+  }
+  .meter-stats {
+    display: flex; flex-wrap: wrap; gap: 8px 32px;
+    margin-top: 24px; padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 13.5px; color: var(--dim);
+  }
+  .meter-stats b { color: var(--text); font-weight: 600; }
+  .meter-stats .live::before {
+    content: "●"; margin-right: 7px; color: var(--green);
+    animation: blink 2.2s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: .3; } }
+
+  /* ---------- sections ---------- */
+  section { padding: 72px 0 0; }
+  .sec-label {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em;
+    color: var(--green); margin-bottom: 14px;
+  }
+  h2 {
+    font-weight: 800; letter-spacing: -.02em;
+    font-size: clamp(26px, 3.6vw, 38px); line-height: 1.1;
+    margin-bottom: 28px;
+  }
+
+  /* loop */
+  .loop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .loop .step {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 22px 20px 24px;
+  }
+  .step .n {
+    font-family: var(--mono); font-weight: 700; font-size: 13px;
+    color: var(--green); margin-bottom: 12px;
+  }
+  .step h3 { font-weight: 700; font-size: 16.5px; margin-bottom: 8px; }
+  .step p { font-size: 13.5px; color: var(--dim); }
+  .step p b { color: var(--text); font-weight: 600; }
+
+  /* pinned manifesto */
+  .pinned {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(24px, 4vw, 40px);
+    max-width: 780px;
+  }
+  .pinned .meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--dim);
+    margin-bottom: 20px;
+  }
+  .pinned .meta b { color: var(--text); font-weight: 500; }
+  .pin-chip {
+    background: var(--green-tint); color: var(--green-light);
+    padding: 3px 9px; border-radius: 5px; font-weight: 500;
+  }
+  .pinned .text { font-size: 16px; line-height: 1.75; white-space: pre-line; color: var(--text); }
+  .pinned .worth {
+    margin-top: 24px;
+    font-family: var(--mono); font-weight: 700; font-size: 22px;
+    color: var(--green-light);
+  }
+
+  /* war log */
+  .log-wrap { overflow-x: auto; }
+  table.log { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 640px; }
+  .log th {
+    text-align: left; font-family: var(--mono); font-size: 11.5px;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--dim); font-weight: 500; padding: 0 14px 10px 0;
+  }
+  .log td { padding: 12px 14px 12px 0; border-top: 1px solid var(--line); white-space: nowrap; }
+  .log .t-pay { color: var(--green-light); font-weight: 600; }
+  .log .t-outbid { color: var(--text); font-weight: 600; }
+  .log .t-claim, .log .t-deposit { color: var(--green); }
+  .log a { color: var(--dim); }
+  .log a:hover { color: var(--text); }
+  .log-empty {
+    border: 1px dashed var(--line); border-radius: 12px;
+    padding: 30px; color: var(--dim); font-size: 14px;
+  }
+
+  /* proof cards */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 24px;
+  }
+  .card h3 { font-weight: 700; font-size: 16.5px; margin-bottom: 12px; }
+  .card .row {
+    display: flex; justify-content: space-between; gap: 16px;
+    padding: 9px 0; border-top: 1px solid var(--line);
+    font-size: 13.5px;
+  }
+  .card .row span:first-child { color: var(--dim); flex: none; }
+  .card .row a, .card .row .val { text-align: right; font-family: var(--mono); font-size: 12.5px; }
+  .card .row a { word-break: break-all; color: var(--green-light); }
+
+  /* footer */
+  footer { margin-top: 88px; border-top: 1px solid var(--line); }
+  footer .wrap {
+    padding-top: 40px; padding-bottom: 44px;
+    display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: flex-start;
+  }
+  footer .big { font-weight: 800; font-size: clamp(22px, 3vw, 30px); letter-spacing: -.01em; }
+  footer .fine { font-size: 12.5px; color: var(--dim); max-width: 400px; }
+  footer .fine a { color: var(--green-light); text-decoration: none; }
+  footer .fine a:hover { text-decoration: underline; }
+  footer .spacer { flex: 1; }
+
+  .demo-badge {
+    position: fixed; bottom: 14px; left: 14px; z-index: 50;
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--dim); font-family: var(--mono); font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 6px 10px; border-radius: 6px;
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .loop { grid-template-columns: 1fr 1fr; }
+    .cards { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .loop { grid-template-columns: 1fr; }
+    .top { flex-wrap: wrap; }
+    .chip { max-width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+    .gauge-fill { transition: none; }
+    .meter-stats .live::before { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap top">
+  <a class="mark" href="#"><img src="brand/logo.svg" alt="">MANIFEL</a>
+  <span class="chip" id="ca-chip">CA: TBD — launching on pools.trade</span>
+  <span class="spacer"></span>
+  <a class="btn" href="community.html">Community <span class="soon-tag">soon</span></a>
+  <a class="btn" id="link-gmgn" href="https://gmgn.ai/?chain=robinhood" target="_blank" rel="noopener">GMGN</a>
+  <a class="btn solid" id="link-buy" href="https://pools.trade" target="_blank" rel="noopener">Buy on pools.trade</a>
+</div>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee-track"></div>
+</div>
+
+<header class="hero wrap">
+  <div class="eyebrow">Robinhood Chain · pools.trade · 3% tax</div>
+  <h1>Every trade feeds<br>the <span class="g">Manifesto.</span></h1>
+  <p class="lede">
+    MANIFEL is a token that markets itself. Its <b>3% tax</b> fills a public
+    vault. The vault buys the token's own <b>Manifesto on GMGN</b> — the paid,
+    pinned post that GMGN broadcasts sitewide. Each one costs
+    <b>+$100 over the last</b>. The louder it gets, the more it trades.
+    The more it trades, the louder it gets.
+  </p>
+
+  <!-- ================= THE METER ================= -->
+  <div class="meter-panel" id="meter">
+    <div class="meter-head">
+      <div class="meter-title">The Manifesto Meter</div>
+      <div class="meter-sub" id="meter-sub">fees collected toward the next outbid</div>
+    </div>
+    <div class="togo">
+      <span id="togo-num">$—</span>
+      <small id="togo-label">to the next manifesto</small>
+    </div>
+    <div class="gauge" role="img" aria-label="Progress toward the next manifesto level" id="gauge">
+      <div class="gauge-fill" id="gauge-fill"></div>
+    </div>
+    <div class="gauge-scale">
+      <span id="scale-left">$0</span>
+      <span id="scale-right">next level: $199</span>
+    </div>
+    <div class="meter-stats">
+      <span class="live">vault <b id="stat-vault">— ETH ≈ $—</b></span>
+      <span>tax flow <b>3% of every buy &amp; sell</b></span>
+      <span>standing manifesto <b id="stat-current">none yet</b></span>
+    </div>
+  </div>
+</header>
+
+<section class="wrap" id="loop">
+  <div class="sec-label">the machine</div>
+  <h2>A loop with no exit</h2>
+  <div class="loop">
+    <div class="step">
+      <div class="n">01</div>
+      <h3>The Tax</h3>
+      <p>Every buy and sell of MANIFEL pays <b>3%</b> to the machine.
+         Set at launch, on-chain, <b>immutable</b> — nobody can turn it off. Not even us.</p>
+    </div>
+    <div class="step">
+      <div class="n">02</div>
+      <h3>The Vault</h3>
+      <p>Fees land in a <b>public wallet</b>. No multisig theater — one address,
+         watchable by anyone, spent on exactly one thing.</p>
+    </div>
+    <div class="step">
+      <div class="n">03</div>
+      <h3>The Outbid</h3>
+      <p>A GMGN Manifesto starts at <b>$199</b>. Replacing one costs
+         <b>+$100</b> over the standing bid. When the vault fills — MANIFEL outbids
+         its own manifesto. Paid. Pinned.</p>
+    </div>
+    <div class="step">
+      <div class="n">04</div>
+      <h3>The Broadcast</h3>
+      <p>GMGN announces every manifesto <b>sitewide</b> — a toast on every trader's
+         screen. New eyes arrive. They trade. Return to <b>01</b>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="manifesto">
+  <div class="sec-label">pinned on GMGN</div>
+  <h2 id="pinned-title">The standing manifesto</h2>
+  <div class="pinned">
+    <div class="meta">
+      <span class="pin-chip" id="pinned-stamp">Awaiting launch</span>
+      <span>from <b id="pinned-handle">@manifel</b></span>
+      <span>since <b id="pinned-since">—</b></span>
+      <span>outbid price <b id="pinned-outbid">$199</b></span>
+    </div>
+    <div class="text" id="pinned-text">We do not market. The machine markets.
+
+Every trade is a donation to its own noise. MANIFEL buys the pin. The pin buys attention. Attention buys trades. The loop closes.
+
+Outbid us. We'll take it back with your fee.</div>
+    <div class="worth" id="pinned-worth">Worth: —</div>
+  </div>
+</section>
+
+<section class="wrap" id="warlog">
+  <div class="sec-label">war log</div>
+  <h2>Battles for the pin</h2>
+  <div class="log-wrap" id="log-container">
+    <div class="log-empty">No battles yet. The first manifesto drops at launch — $199, from the vault.</div>
+  </div>
+</section>
+
+<section class="wrap" id="proof">
+  <div class="sec-label">proof</div>
+  <h2>Don't trust. Watch.</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>The Vault</h3>
+      <div class="row"><span>Address</span><a id="vault-addr" href="#" target="_blank" rel="noopener">TBD at launch</a></div>
+      <div class="row"><span>Balance</span><span class="val" id="vault-bal">—</span></div>
+      <div class="row"><span>Spent on manifestos</span><span class="val" id="vault-spent">$0</span></div>
+    </div>
+    <div class="card">
+      <h3>The Token</h3>
+      <div class="row"><span>Contract</span><a id="token-addr" href="#" target="_blank" rel="noopener">TBD at launch</a></div>
+      <div class="row"><span>Chain</span><span class="val">Robinhood Chain (4663)</span></div>
+      <div class="row"><span>Creator tax</span><span class="val">3% — immutable, 100% to the vault</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="big">Outbid us if you can.</div>
+    <span class="spacer"></span>
+    <div class="fine">
+      MANIFEL is a memecoin experiment on Robinhood Chain. No roadmap beyond the
+      loop. Extremely volatile; most memecoins go to zero. Not financial advice.
+      <br><br>
+      <a href="community.html">Community (soon)</a> ·
+      <a href="https://pools.trade" target="_blank" rel="noopener">pools.trade</a> ·
+      <a href="https://gmgn.ai/?chain=robinhood" target="_blank" rel="noopener">GMGN</a> ·
+      <a href="https://robinhoodchain.blockscout.com" target="_blank" rel="noopener">Explorer</a>
+    </div>
+  </div>
+</footer>
+
+<div class="demo-badge" id="demo-badge">demo data</div>
+
+<script>
+(() => {
+  "use strict";
+
+  /* ---- config: fill at launch ---- */
+  const CONFIG = {
+    tokenCa: null,            // MANIFEL contract, set at launch
+    vaultAddress: null,       // public vault wallet
+    rpc: "https://rpc.mainnet.chain.robinhood.com",
+    explorer: "https://robinhoodchain.blockscout.com",
+    fallbackEthUsd: 4400,
+    baseLevelUsd: 199,
+    stepUsd: 100,
+  };
+
+  /* ---- demo state: replaced by ./state.json written by the vault bot ---- */
+  const MOCK = {
+    demo: true,
+    ethUsd: 4400,
+    manifesto: {
+      worthUsd: 199,
+      handle: "@manifel",
+      sinceTs: 1786021665107,
+      text: "We do not market. The machine markets.\n\nEvery trade is a donation to its own noise. MANIFEL buys the pin. The pin buys attention. Attention buys trades. The loop closes.\n\nOutbid us. We'll take it back with your fee.",
+    },
+    vault: { eth: 0.0489, spentUsd: 199 },
+    feed: [
+      { ts: 1786021665107, type: "pay",     usd: 199, note: "First manifesto pinned",        tx: null },
+      { ts: 1786018200000, type: "deposit", usd: 205, note: "0.0466 ETH → GMGN wallet",      tx: "0x" },
+      { ts: 1786004520000, type: "claim",   usd: 121, note: "Fee sweep from bonding curve",  tx: "0x" },
+    ],
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const fmtUsd = (n) => "$" + Math.round(n).toLocaleString("en-US");
+  const fmtEth = (n) => (Math.round(n * 1e4) / 1e4).toString();
+  const fmtDate = (ts) => new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* marquee content */
+  function setMarquee(state) {
+    const worth = state.manifesto?.worthUsd || 0;
+    const items = worth > 0
+      ? [`「${fmtUsd(worth)} MANIFESTO」 of MANIFEL from ${state.manifesto.handle}`,
+         "every trade feeds the Manifesto",
+         `next level ${fmtUsd(worth + CONFIG.stepUsd)}`]
+      : ["every trade feeds the Manifesto",
+         `first manifesto at ${fmtUsd(CONFIG.baseLevelUsd)}`,
+         "3% tax · public vault · sitewide broadcast"];
+    const half = items.map((s) => `<span>${s} ✦</span>`).join("");
+    $("marquee-track").innerHTML = half + half; /* duplicated for seamless loop */
+  }
+
+  /* count-up for the big number */
+  function countUp(el, target) {
+    if (reduced || document.hidden) { el.textContent = fmtUsd(target); return; }
+    const t0 = performance.now(), dur = 1400, from = target * 0.35;
+    const tick = (t) => {
+      const p = Math.min(1, (t - t0) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmtUsd(from + (target - from) * e);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  function render(state) {
+    const ethUsd = state.ethUsd || CONFIG.fallbackEthUsd;
+    const worth = state.manifesto?.worthUsd || 0;
+    const nextLevel = worth > 0 ? worth + CONFIG.stepUsd : CONFIG.baseLevelUsd;
+    const vaultEth = state.vault?.eth || 0;
+    const vaultUsd = vaultEth * ethUsd;
+    const toGo = Math.max(0, nextLevel - vaultUsd);
+    const progress = Math.min(1, vaultUsd / nextLevel);
+
+    /* meter */
+    if (toGo <= 0) {
+      $("togo-num").textContent = "READY";
+      $("togo-label").textContent = "vault full — firing the next manifesto";
+    } else {
+      countUp($("togo-num"), toGo);
+      $("togo-label").textContent = worth > 0 ? "to outbid our own manifesto" : "to the first manifesto";
+    }
+    $("scale-left").textContent = `vault: ${fmtUsd(vaultUsd)}`;
+    $("scale-right").textContent = `next level: ${fmtUsd(nextLevel)}`;
+    $("stat-vault").textContent = `${fmtEth(vaultEth)} ETH ≈ ${fmtUsd(vaultUsd)}`;
+    $("stat-current").textContent = worth > 0 ? `${fmtUsd(worth)} · ${state.manifesto.handle}` : "none yet";
+    $("gauge").setAttribute("aria-label",
+      `Vault ${fmtUsd(vaultUsd)} of ${fmtUsd(nextLevel)} needed for the next manifesto`);
+    const pct = (progress * 100).toFixed(2) + "%";
+    const setPos = () => { $("gauge-fill").style.width = pct; };
+    if (reduced || document.hidden) setPos();
+    else requestAnimationFrame(() => requestAnimationFrame(setPos));
+
+    /* pinned manifesto */
+    if (worth > 0) {
+      $("pinned-stamp").textContent = "Pinned";
+      $("pinned-handle").textContent = state.manifesto.handle;
+      $("pinned-since").textContent = fmtDate(state.manifesto.sinceTs);
+      $("pinned-outbid").textContent = fmtUsd(nextLevel);
+      if (state.manifesto.text) $("pinned-text").textContent = state.manifesto.text;
+      $("pinned-worth").textContent = `Worth: ${fmtUsd(worth)}`;
+    } else {
+      $("pinned-stamp").textContent = "Awaiting launch";
+      $("pinned-worth").textContent = `First pin: ${fmtUsd(CONFIG.baseLevelUsd)}`;
+      $("pinned-outbid").textContent = fmtUsd(CONFIG.baseLevelUsd);
+      $("pinned-since").textContent = "—";
+    }
+
+    /* war log */
+    const feed = state.feed || [];
+    if (feed.length) {
+      const label = { claim: "fee claim", deposit: "deposit", pay: "manifesto paid", outbid: "outbid us" };
+      const rows = feed.map((f) => `
+        <tr>
+          <td>${fmtDate(f.ts)}</td>
+          <td class="t-${f.type}">${label[f.type] || f.type}</td>
+          <td>${f.usd ? fmtUsd(f.usd) : "—"}</td>
+          <td>${f.note || ""}</td>
+          <td>${f.tx && f.tx.length > 4 ? `<a href="${CONFIG.explorer}/tx/${f.tx}" target="_blank" rel="noopener">tx ↗</a>` : "—"}</td>
+        </tr>`).join("");
+      $("log-container").innerHTML = `
+        <table class="log">
+          <thead><tr><th>Date</th><th>Event</th><th>Amount</th><th>Detail</th><th>Proof</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    }
+
+    /* proof cards */
+    $("vault-bal").textContent = `${fmtEth(vaultEth)} ETH ≈ ${fmtUsd(vaultUsd)}`;
+    $("vault-spent").textContent = fmtUsd(state.vault?.spentUsd || 0);
+    if (CONFIG.vaultAddress) {
+      const a = $("vault-addr");
+      a.textContent = CONFIG.vaultAddress;
+      a.href = `${CONFIG.explorer}/address/${CONFIG.vaultAddress}`;
+    }
+    if (CONFIG.tokenCa) {
+      const a = $("token-addr");
+      a.textContent = CONFIG.tokenCa;
+      a.href = `${CONFIG.explorer}/token/${CONFIG.tokenCa}`;
+      $("ca-chip").textContent = `CA: ${CONFIG.tokenCa}`;
+      $("link-buy").href = `https://pools.trade/t/${CONFIG.tokenCa}`;
+      $("link-gmgn").href = `https://gmgn.ai/robinhood/token/${CONFIG.tokenCa}`;
+    }
+
+    $("demo-badge").style.display = state.demo ? "block" : "none";
+    setMarquee(state);
+  }
+
+  /* live vault balance straight from the chain, when configured */
+  async function liveVaultEth() {
+    if (!CONFIG.vaultAddress) return null;
+    try {
+      const r = await fetch(CONFIG.rpc, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_getBalance", params: [CONFIG.vaultAddress, "latest"] }),
+      });
+      const j = await r.json();
+      return j.result ? Number(BigInt(j.result)) / 1e18 : null;
+    } catch { return null; }
+  }
+
+  async function boot() {
+    let state = MOCK;
+    try {
+      const r = await fetch("./state.json", { cache: "no-store" });
+      if (r.ok) state = await r.json();
+    } catch { /* keep demo state */ }
+    const live = await liveVaultEth();
+    if (live !== null) {
+      state.vault = state.vault || {};
+      state.vault.eth = live;
+      state.demo = false;
+    }
+    render(state);
+  }
+
+  boot();
+})();
+</script>
+</body>
+</html>

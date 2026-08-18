@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320">
+  <!-- MANIFEL mark: pixel megaphone, GMGN palette -->
+  <rect width="320" height="320" rx="56" fill="#121212"/>
+  <g>
+    <!-- horn body -->
+    <rect x="60" y="120" width="40" height="80" fill="#46B87D"/>
+    <rect x="100" y="100" width="60" height="120" fill="#46B87D"/>
+    <rect x="160" y="80" width="40" height="160" fill="#46B87D"/>
+    <!-- bell rim -->
+    <rect x="200" y="60" width="20" height="200" fill="#69CF8D"/>
+    <!-- mouthpiece -->
+    <rect x="40" y="140" width="20" height="40" fill="#69CF8D"/>
+    <!-- handle -->
+    <rect x="100" y="220" width="40" height="20" fill="#2F7A54"/>
+    <rect x="100" y="240" width="40" height="20" fill="#2F7A54"/>
+    <!-- sound rays -->
+    <rect x="240" y="140" width="20" height="40" fill="#69CF8D"/>
+    <rect x="240" y="80" width="20" height="20" fill="#46B87D"/>
+    <rect x="260" y="60" width="20" height="20" fill="#69CF8D"/>
+    <rect x="240" y="220" width="20" height="20" fill="#46B87D"/>
+    <rect x="260" y="240" width="20" height="20" fill="#69CF8D"/>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+{
+  "demo": true,
+  "ethUsd": 4400,
+  "manifesto": {
+    "worthUsd": 199,
+    "handle": "@manifel",
+    "sinceTs": 1786021665107,
+    "text": "We do not market. The machine markets.\n\nEvery trade is a donation to its own noise. MANIFEL buys the pin. The pin buys attention. Attention buys trades. The loop closes.\n\nOutbid us. We'll take it back with your fee."
+  },
+  "vault": { "eth": 0.0489, "spentUsd": 199 },
+  "feed": [
+    { "ts": 1786021665107, "type": "pay", "usd": 199, "note": "First manifesto pinned", "tx": null },
+    { "ts": 1786018200000, "type": "deposit", "usd": 205, "note": "0.0466 ETH → GMGN wallet", "tx": "0x" },
+    { "ts": 1786004520000, "type": "claim", "usd": 121, "note": "Fee sweep from bonding curve", "tx": "0x" }
+  ]
+}
