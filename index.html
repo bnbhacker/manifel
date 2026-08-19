@@ -477,8 +477,8 @@ Outbid us. We'll take it back with your fee.</div>
 
   /* ---- config: fill at launch ---- */
   const CONFIG = {
-    tokenCa: null,            // MANIFEL contract, set at launch
-    vaultAddress: null,       // public vault wallet
+    tokenCa: null,            // $MFUEL contract, set at launch
+    vaultAddress: "0x5ecB7a2ad6954887f9831441f690128A25793342",
     rpc: "https://rpc.mainnet.chain.robinhood.com",
     explorer: "https://robinhoodchain.blockscout.com",
     fallbackEthUsd: 4400,
@@ -617,7 +617,12 @@ Outbid us. We'll take it back with your fee.</div>
     const progress = Math.min(1, vaultUsd / nextLevel);
 
     /* meter */
-    if (toGo <= 0) {
+    if (!CONFIG.tokenCa) {
+      /* Pre-launch: the vault is seeded but no fees flow yet, so the meter
+         reports the war chest instead of claiming it is about to fire. */
+      $("togo-num").textContent = fmtUsd(vaultUsd);
+      $("togo-label").textContent = "war chest ready — the meter arms when $MFUEL launches";
+    } else if (toGo <= 0) {
       $("togo-num").textContent = "READY";
       $("togo-label").textContent = "vault full — firing the next manifesto";
     } else {
@@ -625,7 +630,9 @@ Outbid us. We'll take it back with your fee.</div>
       $("togo-label").textContent = worth > 0 ? "to outbid our own manifesto" : "to the first manifesto";
     }
     $("scale-left").textContent = `vault: ${fmtUsd(vaultUsd)}`;
-    $("scale-right").textContent = `next level: ${fmtUsd(nextLevel)}`;
+    $("scale-right").textContent = CONFIG.tokenCa
+      ? `next level: ${fmtUsd(nextLevel)}`
+      : `first manifesto: ${fmtUsd(nextLevel)}`;
     $("stat-vault").textContent = `${fmtEth(vaultEth)} ETH ≈ ${fmtUsd(vaultUsd)}`;
     $("stat-current").textContent = worth > 0 ? `${fmtUsd(worth)} · ${state.manifesto.handle}` : "none yet";
     $("gauge").setAttribute("aria-label",
@@ -633,7 +640,12 @@ Outbid us. We'll take it back with your fee.</div>
     const pct = (progress * 100).toFixed(2) + "%";
     const setPos = () => { $("gauge-fill").style.width = pct; };
     if (reduced || document.hidden) setPos();
-    else requestAnimationFrame(() => requestAnimationFrame(setPos));
+    else {
+      requestAnimationFrame(() => requestAnimationFrame(setPos));
+      /* rAF is throttled to zero in background tabs, so the bar would stay at
+         0% for anyone who opens the page in one. */
+      setTimeout(setPos, 400);
+    }
 
     /* pinned manifesto */
     if (worth > 0) {
@@ -713,11 +725,13 @@ Outbid us. We'll take it back with your fee.</div>
       const r = await fetch("./state.json", { cache: "no-store" });
       if (r.ok) state = await r.json();
     } catch { /* keep demo state */ }
+    /* Live chain balance always wins over whatever the file says; the demo
+       flag stays as the file declared it, so sample content never passes for
+       real history just because the balance is genuine. */
     const live = await liveVaultEth();
     if (live !== null) {
       state.vault = state.vault || {};
       state.vault.eth = live;
-      state.demo = false;
     }
     render(state);
   }

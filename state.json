@@ -1,21 +1,8 @@
 {
-  "demo": true,
+  "demo": false,
   "ethUsd": 4400,
-  "manifesto": {
-    "worthUsd": 199,
-    "handle": "@manifel",
-    "sinceTs": 1786021665107,
-    "text": "We do not market. The machine markets.\n\nEvery trade is a donation to its own noise. MANIFEL buys the pin. The pin buys attention. Attention buys trades. The loop closes.\n\nOutbid us. We'll take it back with your fee."
-  },
-  "vault": { "eth": 0.0489, "spentUsd": 199 },
-  "paidManifestos": [
-    { "ca": "0x0ab8d01664d4bb625705f9f3c595a8a19b3dcfb0", "symbol": "sushicat", "name": "Sushi Cat", "amountUsd": 299, "ts": 1786541400000, "mcapUsd": 1240000 },
-    { "ca": "0x45242320dbb855eea8fd36804c6487e10e97fcf9", "symbol": "TENDIES", "name": "Tendies", "amountUsd": 199, "ts": 1786282200000, "mcapUsd": 486000 },
-    { "ca": "0x1111111111111111111111111111111111111111", "symbol": "MFUEL", "name": "MANIFEL", "image": "brand/logo.svg", "amountUsd": 199, "ts": 1786021665107, "mcapUsd": 215000 }
-  ],
-  "feed": [
-    { "ts": 1786021665107, "type": "pay", "usd": 199, "note": "First manifesto pinned", "tx": null },
-    { "ts": 1786018200000, "type": "deposit", "usd": 205, "note": "0.0466 ETH → GMGN wallet", "tx": "0x" },
-    { "ts": 1786004520000, "type": "claim", "usd": 121, "note": "Fee sweep from bonding curve", "tx": "0x" }
-  ]
+  "manifesto": { "worthUsd": 0, "handle": "", "sinceTs": 0 },
+  "vault": { "eth": 0, "address": "0x5ecB7a2ad6954887f9831441f690128A25793342", "spentUsd": 0 },
+  "paidManifestos": [],
+  "feed": []
 }

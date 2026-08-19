@@ -1,10 +1,5 @@
 {
   "round": 1,
-  "demo": true,
-  "snapshotNote": "demo data — round 1 opens after launch",
-  "candidates": [
-    { "ca": "0x0ab8d01664d4bb625705f9f3c595a8a19b3dcfb0", "symbol": "sushicat", "name": "Sushi Cat", "weight": 4200000 },
-    { "ca": "0x5cb6f181081301b44905f3ae15419112ecabd8a6", "symbol": "PIPEDOG", "name": "Pipe Dog", "weight": 2800000 },
-    { "ca": "0x45242320dbb855eea8fd36804c6487e10e97fcf9", "symbol": "TENDIES", "name": "Tendies", "weight": 1400000 }
-  ]
+  "snapshotNote": "round 1 opens after launch",
+  "candidates": []
 }
