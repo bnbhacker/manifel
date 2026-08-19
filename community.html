@@ -60,10 +60,9 @@
   .btn.solid { background: var(--green); border-color: var(--green); color: #0f1511; }
   .btn.solid:hover { background: var(--green-light); border-color: var(--green-light); }
   .btn[disabled] { opacity: .45; cursor: not-allowed; }
-  .btn[disabled]:hover { border-color: var(--line); background: var(--green); }
-  .btn.solid[disabled]:hover { background: var(--green); }
+  .btn.sm { padding: 7px 14px; font-size: 12.5px; }
 
-  .hero { padding: 64px 0 24px; }
+  .hero { padding: 60px 0 24px; }
   .eyebrow {
     font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em;
     color: var(--green); margin-bottom: 18px;
@@ -76,28 +75,28 @@
   .hero p.lede { margin-top: 22px; max-width: 640px; color: var(--dim); font-size: 15.5px; }
   .hero p.lede b { color: var(--text); font-weight: 600; }
 
-  section { padding: 64px 0 0; }
+  section { padding: 56px 0 0; }
   .sec-label {
     font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em;
     color: var(--green); margin-bottom: 14px;
   }
   h2 {
     font-weight: 800; letter-spacing: -.02em;
-    font-size: clamp(24px, 3.4vw, 36px); line-height: 1.1; margin-bottom: 26px;
+    font-size: clamp(24px, 3.4vw, 36px); line-height: 1.1; margin-bottom: 22px;
   }
 
-  /* wallet / status card */
+  /* wallet card */
   .wallet-card {
-    margin-top: 40px;
+    margin-top: 36px;
     background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
-    padding: clamp(22px, 3.5vw, 32px);
+    padding: clamp(22px, 3.5vw, 30px);
     display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px;
   }
   .wallet-card .info { flex: 1; min-width: 240px; }
   .wallet-card .title { font-weight: 700; font-size: 16.5px; }
   .wallet-card .sub { font-size: 13.5px; color: var(--dim); margin-top: 4px; }
   .wallet-card .sub b { color: var(--text); font-weight: 600; }
-  .wallet-card .addr { font-family: var(--mono); font-size: 12.5px; color: var(--green-light); }
+  .wallet-card .addr { font-family: var(--mono); font-size: 12px; color: var(--green-light); margin-top: 4px; }
   .badge {
     font-family: var(--mono); font-size: 12px;
     background: var(--green-tint); color: var(--green-light);
@@ -106,42 +105,71 @@
 
   /* candidates */
   .round-head {
-    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px;
-    margin-bottom: 18px;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; margin-bottom: 18px;
   }
   .round-head .meta { font-family: var(--mono); font-size: 12.5px; color: var(--dim); }
   .cand-list { display: flex; flex-direction: column; gap: 10px; }
   .cand {
     background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
-    padding: 18px 20px;
-    display: grid; grid-template-columns: 1fr auto; gap: 6px 18px; align-items: center;
+    padding: 16px 18px;
+    display: grid; grid-template-columns: 42px 1fr auto; gap: 6px 14px; align-items: center;
+    transition: border-color .15s;
   }
-  .cand .name { font-weight: 700; font-size: 15.5px; }
-  .cand .name .sym { color: var(--green-light); font-family: var(--mono); font-size: 13px; margin-left: 8px; }
-  .cand .ca {
+  .cand:hover { border-color: rgba(105, 207, 141, .35); }
+  .cand .ava {
+    grid-row: span 2;
+    width: 42px; height: 42px; border-radius: 10px; overflow: hidden;
+    background: var(--green-tint); color: var(--green-light);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 17px;
+  }
+  .cand .ava img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cand .name { font-weight: 700; font-size: 15.5px; min-width: 0; }
+  .cand .name a { text-decoration: none; }
+  .cand .name a:hover { color: var(--green-light); }
+  .cand .name .sym { color: var(--green-light); font-family: var(--mono); font-size: 12.5px; margin-left: 7px; }
+  .cand .votebox { grid-row: span 2; display: flex; align-items: center; gap: 14px; }
+  .cand .pct { font-family: var(--mono); font-weight: 700; font-size: 17px; color: var(--green-light); min-width: 44px; text-align: right; }
+  .cand .meta-row {
+    grid-column: 2 / 3;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px;
     font-family: var(--mono); font-size: 11.5px; color: var(--dim);
-    word-break: break-all;
   }
-  .cand .ca a { color: var(--dim); text-decoration: none; }
-  .cand .ca a:hover { color: var(--text); }
-  .cand .votebox { grid-row: span 2; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-  .cand .pct { font-family: var(--mono); font-weight: 700; font-size: 18px; color: var(--green-light); }
+  .cand .ca-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--panel-2); border: 1px solid transparent;
+    color: var(--dim); font-family: var(--mono); font-size: 11.5px;
+    padding: 3px 8px; border-radius: 6px; cursor: pointer;
+    transition: color .15s, border-color .15s;
+  }
+  .cand .ca-chip:hover { color: var(--green-light); border-color: rgba(105, 207, 141, .35); }
   .cand .bar {
-    grid-column: 1 / -1;
-    height: 8px; border-radius: 4px; background: var(--panel-2);
-    overflow: hidden;
+    grid-column: 1 / -1; height: 6px; border-radius: 3px;
+    background: var(--panel-2); overflow: hidden; margin-top: 4px;
   }
   .cand .bar i {
     display: block; height: 100%;
     background: linear-gradient(90deg, var(--green), var(--green-light));
-    border-radius: 4px;
+    border-radius: 3px;
   }
   .cand-empty {
     border: 1px dashed var(--line); border-radius: 12px;
     padding: 30px; color: var(--dim); font-size: 14px;
   }
 
-  /* how it works */
+  .note {
+    margin-top: 20px;
+    border: 1px dashed var(--line); border-radius: 12px;
+    padding: 22px; max-width: 820px;
+    color: var(--dim); font-size: 13.5px;
+  }
+  .note b { color: var(--text); font-weight: 600; }
+  .note code {
+    font-family: var(--mono); font-size: 12px;
+    background: var(--panel-2); padding: 1px 6px; border-radius: 4px;
+    color: var(--green-light); word-break: break-all;
+  }
+
   .loop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .loop .step {
     background: var(--panel); border: 1px solid var(--line);
@@ -157,15 +185,7 @@
     color: var(--green-light); word-break: break-all;
   }
 
-  .note {
-    margin-top: 28px;
-    border: 1px dashed var(--line); border-radius: 12px;
-    padding: 24px; max-width: 780px;
-    color: var(--dim); font-size: 13.5px;
-  }
-  .note b { color: var(--text); font-weight: 600; }
-
-  footer { margin-top: 88px; border-top: 1px solid var(--line); }
+  footer { margin-top: 80px; border-top: 1px solid var(--line); }
   footer .wrap {
     padding-top: 40px; padding-bottom: 44px;
     display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: flex-start;
@@ -185,7 +205,11 @@
   }
 
   @media (max-width: 760px) { .loop { grid-template-columns: 1fr; } }
-  @media (max-width: 560px) { .top { flex-wrap: wrap; } }
+  @media (max-width: 560px) {
+    .top { flex-wrap: wrap; }
+    .cand { grid-template-columns: 42px 1fr; }
+    .cand .votebox { grid-row: auto; grid-column: 1 / -1; justify-content: space-between; }
+  }
 </style>
 </head>
 <body>
@@ -203,8 +227,9 @@
   <p class="lede">
     The vault doesn't only talk about itself. <b>$MFUEL holders</b> pick the
     next token the machine supports — the winner gets a <b>GMGN Manifesto
-    bought by our vault</b>, broadcast sitewide. Voting happens on-chain:
-    no forms, no backend, every ballot is a transaction anyone can audit.
+    bought by our vault</b>, pinned on their page and broadcast sitewide.
+    Voting happens on-chain: no forms, no backend, every ballot is a
+    transaction anyone can audit.
   </p>
 
   <div class="wallet-card">
@@ -214,27 +239,27 @@
         <b>$MFUEL</b> balance — that's the weight of your vote.</div>
       <div class="addr" id="w-addr"></div>
     </div>
-    <span class="badge" id="round-badge">voting opens at launch</span>
+    <span class="badge" id="round-badge">round 1 open</span>
   </div>
 </header>
 
 <section class="wrap" id="round">
   <div class="sec-label">current round</div>
   <div class="round-head">
-    <h2 id="round-title">Candidates</h2>
+    <h2 id="round-title">Round 1</h2>
     <span class="meta" id="round-meta"></span>
   </div>
   <div class="cand-list" id="cand-list">
-    <div class="cand-empty">Nominations open after launch. The first round is
-      seeded from community suggestions in our X replies.</div>
+    <div class="cand-empty">Loading candidates…</div>
   </div>
   <div class="note" id="vote-note">
     <b>How a ballot works:</b> voting sends a <b>0 ETH</b> transaction on
-    Robinhood Chain to the vault address with the candidate's contract in the
-    data field. Gas costs a fraction of a cent. The tally weighs each wallet by
-    its $MFUEL balance at the round snapshot — one wallet counts once, moving
-    tokens after the snapshot changes nothing. Every vote is public,
-    every count is reproducible from the chain.
+    Robinhood Chain to the vault, carrying <code>MFUEL:VOTE:&lt;token&gt;</code>
+    in the data field — gas costs a fraction of a cent and nothing leaves your
+    wallet. Weight is your <b>$MFUEL balance at the snapshot</b> taken when the
+    round closes, so one wallet counts once and last vote wins. Ballots are
+    public the moment they confirm; the tally here is counted from the chain
+    when the round closes.
   </div>
 </section>
 
@@ -271,11 +296,12 @@
     <span class="spacer"></span>
     <div class="fine">
       Manifuel is a memecoin experiment on Robinhood Chain. Extremely volatile;
-      most memecoins go to zero. Not financial advice.
+      most memecoins go to zero. Not financial advice. Candidates are community
+      nominations, not endorsements.
       <br><br>
       <a href="./">The machine</a> ·
       <a href="https://www.ponsfamily.com/launchpad/0x48818B5143D5540Afa11ed2c53dca6CA20039d69" target="_blank" rel="noopener">Pons</a> ·
-      <a href="https://gmgn.ai/?chain=robinhood" target="_blank" rel="noopener">GMGN</a>
+      <a href="https://gmgn.ai/robinhood/token/0x48818B5143D5540Afa11ed2c53dca6CA20039d69" target="_blank" rel="noopener">GMGN</a>
     </div>
   </div>
 </footer>
@@ -286,7 +312,6 @@
 (() => {
   "use strict";
 
-  /* ---- config: fill at launch ---- */
   const CONFIG = {
     tokenCa: "0x48818B5143D5540Afa11ed2c53dca6CA20039d69",
     ballotAddress: "0x5ecB7a2ad6954887f9831441f690128A25793342",
@@ -304,6 +329,7 @@
   const live = () => !!(CONFIG.tokenCa && CONFIG.ballotAddress);
 
   let account = null;
+  let lastVotes = null;
 
   function toast(msg) {
     const t = $("toast");
@@ -313,7 +339,18 @@
     toast._h = setTimeout(() => { t.style.display = "none"; }, 5000);
   }
 
-  /* ---------- wallet ---------- */
+  async function copyCa(ca) {
+    try {
+      await navigator.clipboard.writeText(ca);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = ca; document.body.appendChild(ta);
+      ta.select(); document.execCommand("copy"); ta.remove();
+    }
+    toast("Contract copied: " + ca.slice(0, 10) + "…");
+  }
+
+  /* ---------------- wallet ---------------- */
   async function ensureChain(eth) {
     try {
       await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: CONFIG.chainIdHex }] });
@@ -332,13 +369,12 @@
   }
 
   async function mfuelBalance(addr) {
-    if (!CONFIG.tokenCa) return null;
     const data = "0x70a08231" + addr.toLowerCase().replace("0x", "").padStart(64, "0");
     const res = await window.ethereum.request({
       method: "eth_call",
       params: [{ to: CONFIG.tokenCa, data }, "latest"],
     });
-    return Number(BigInt(res)) / 1e18;
+    return res && res !== "0x" ? Number(BigInt(res)) / 1e18 : 0;
   }
 
   async function connect() {
@@ -349,22 +385,18 @@
       await ensureChain(window.ethereum);
       $("btn-connect").textContent = account.slice(0, 6) + "…" + account.slice(-4);
       $("w-addr").textContent = account;
-      if (live()) {
-        const bal = await mfuelBalance(account);
-        $("w-sub").innerHTML = `Voting weight: <b>${bal === null ? "—" : Math.floor(bal).toLocaleString("en-US")} $MFUEL</b>`;
-        if (bal !== null && bal <= 0) $("w-sub").innerHTML += ` — hold $MFUEL to make your ballot count.`;
-      } else {
-        $("w-sub").innerHTML = `Wallet connected. <b>$MFUEL isn't live yet</b> — voting weight appears after launch.`;
-      }
-      renderCands(lastVotes); /* re-render to enable buttons */
-    } catch (e) {
+      const bal = await mfuelBalance(account);
+      $("w-sub").innerHTML = bal > 0
+        ? `Voting weight: <b>${Math.floor(bal).toLocaleString("en-US")} $MFUEL</b>`
+        : `<b>0 $MFUEL</b> — your ballot carries no weight until you hold some.`;
+    } catch {
       toast("Connection cancelled or failed.");
     }
   }
 
-  /* ---------- voting ---------- */
+  /* ---------------- voting ---------------- */
   async function vote(ca) {
-    if (!live()) { toast("Voting opens at launch."); return; }
+    if (!live()) { toast("Voting is not open yet."); return; }
     if (!account) { await connect(); if (!account) return; }
     try {
       await ensureChain(window.ethereum);
@@ -375,57 +407,75 @@
         method: "eth_sendTransaction",
         params: [{ from: account, to: CONFIG.ballotAddress, value: "0x0", data: hex }],
       });
-      toast("Ballot sent. It will appear in the tally within a few minutes.");
+      toast("Ballot cast. It's on-chain — counted when the round closes.");
       console.log("vote tx:", tx);
-    } catch (e) {
+    } catch {
       toast("Vote cancelled or failed.");
     }
   }
 
-  /* ---------- candidates ---------- */
-  let lastVotes = null;
+  /* ---------------- candidates ---------------- */
+  const COPY_ICON = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>`;
 
   function renderCands(v) {
     lastVotes = v;
     const list = $("cand-list");
     const cands = (v && Array.isArray(v.candidates)) ? v.candidates.filter((c) => isCa(c.ca)) : [];
+
+    if (v?.round) $("round-title").textContent = `Round ${v.round}`;
+    if (v?.snapshotNote) $("round-meta").textContent = v.snapshotNote;
+
     if (!cands.length) {
-      $("round-badge").textContent = "nominations open soon";
-      return; /* keep the empty-state block */
+      list.innerHTML = `<div class="cand-empty">No candidates in this round yet.
+        Nominations happen in the replies on X — the next round is seeded from them.</div>`;
+      $("round-badge").textContent = "nominations open";
+      return;
     }
 
-    const total = cands.reduce((s, c) => s + (Number(c.weight) || 0), 0) || 1;
+    const total = cands.reduce((s, c) => s + (Number(c.weight) || 0), 0);
+    $("round-badge").textContent = total > 0 ? "voting open" : "voting open · no votes yet";
+
     list.innerHTML = cands
       .slice()
       .sort((a, b) => (Number(b.weight) || 0) - (Number(a.weight) || 0))
       .map((c) => {
-        const pct = Math.round(((Number(c.weight) || 0) / total) * 100);
+        const sym = esc(c.symbol || "?");
+        const pct = total > 0 ? Math.round(((Number(c.weight) || 0) / total) * 100) : 0;
+        /* letter fallback only without a logo, otherwise it peeks out beside it */
+        const ava = c.image
+          ? `<img src="${esc(c.image)}" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('${sym.slice(0, 1).toUpperCase()}'))">`
+          : `<span>${sym.slice(0, 1).toUpperCase()}</span>`;
         return `
         <div class="cand">
-          <div class="name">${esc(c.name || c.symbol || "?")}<span class="sym">$${esc(c.symbol || "?")}</span></div>
+          <div class="ava">${ava}</div>
+          <div class="name">
+            <a href="https://gmgn.ai/robinhood/token/${c.ca}" target="_blank" rel="noopener">${esc(c.name || sym)}</a><span class="sym">$${sym}</span>
+          </div>
           <div class="votebox">
             <span class="pct">${pct}%</span>
-            <button class="btn solid" data-ca="${c.ca}" ${live() ? "" : "disabled"} type="button">Vote</button>
+            <button class="btn solid sm" data-vote="${c.ca}" type="button">Vote</button>
           </div>
-          <div class="ca"><a href="${CONFIG.explorer}/token/${c.ca}" target="_blank" rel="noopener">${c.ca}</a></div>
+          <div class="meta-row">
+            <button class="ca-chip" type="button" data-copy="${c.ca}" title="Copy contract">
+              ${COPY_ICON}${c.ca.slice(0, 6)}…${c.ca.slice(-4)}
+            </button>
+          </div>
           <div class="bar"><i style="width:${pct}%"></i></div>
         </div>`;
       }).join("");
 
-    list.querySelectorAll("button[data-ca]").forEach((b) =>
-      b.addEventListener("click", () => vote(b.dataset.ca)));
-
-    if (v.round) $("round-title").textContent = `Round ${v.round}`;
-    if (v.snapshotNote) $("round-meta").textContent = v.snapshotNote;
-    $("round-badge").textContent = live() ? "voting live" : "demo — voting opens at launch";
+    list.querySelectorAll("button[data-vote]").forEach((b) =>
+      b.addEventListener("click", () => vote(b.dataset.vote)));
+    list.querySelectorAll("button[data-copy]").forEach((b) =>
+      b.addEventListener("click", () => copyCa(b.dataset.copy)));
   }
 
   async function boot() {
     $("btn-connect").addEventListener("click", connect);
     try {
       const r = await fetch("./votes.json", { cache: "no-store" });
-      if (r.ok) renderCands(await r.json());
-    } catch { /* keep empty state */ }
+      renderCands(r.ok ? await r.json() : null);
+    } catch { renderCands(null); }
   }
 
   boot();

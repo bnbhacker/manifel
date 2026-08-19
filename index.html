@@ -324,7 +324,7 @@
 <div class="wrap top">
   <a class="mark" href="#"><img src="brand/logo.svg" alt="Manifuel">MANIFUEL</a>
   <span class="spacer"></span>
-  <a class="btn" href="community.html">Community <span class="soon-tag">soon</span></a>
+  <a class="btn" href="community.html">Community <span class="soon-tag">vote</span></a>
   <a class="btn" id="link-gmgn" href="https://gmgn.ai/?chain=robinhood" target="_blank" rel="noopener">GMGN</a>
   <a class="btn solid" id="link-buy" href="https://www.ponsfamily.com/launchpad/0x48818B5143D5540Afa11ed2c53dca6CA20039d69" target="_blank" rel="noopener">Buy on Pons</a>
 </div>
@@ -460,7 +460,7 @@ Outbid us. We'll take it back with your fee.</div>
       Manifuel is a memecoin experiment on Robinhood Chain. No roadmap beyond the
       loop. Extremely volatile; most memecoins go to zero. Not financial advice.
       <br><br>
-      <a href="community.html">Community (soon)</a> ·
+      <a href="community.html">Community</a> ·
       <a href="https://www.ponsfamily.com/launchpad/0x48818B5143D5540Afa11ed2c53dca6CA20039d69" target="_blank" rel="noopener">Pons</a> ·
       <a href="https://gmgn.ai/?chain=robinhood" target="_blank" rel="noopener">GMGN</a> ·
       <a href="https://robinhoodchain.blockscout.com" target="_blank" rel="noopener">Explorer</a>
@@ -576,11 +576,11 @@ Outbid us. We'll take it back with your fee.</div>
         const sym = esc(m.symbol || "?");
         const gmgn = `https://gmgn.ai/robinhood/token/${m.ca}`;
         const ava = m.image
-          ? `<img src="${esc(m.image)}" alt="" loading="lazy" onerror="this.remove()">`
-          : "";
+          ? `<img src="${esc(m.image)}" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('${sym.slice(0, 1).toUpperCase()}'))">`
+          : `<span>${sym.slice(0, 1).toUpperCase()}</span>`;
         return `
         <div class="mh-card">
-          <div class="mh-ava">${ava}<span>${sym.slice(0, 1).toUpperCase()}</span></div>
+          <div class="mh-ava">${ava}</div>
           <div class="mh-name">
             <a href="${gmgn}" target="_blank" rel="noopener">${esc(m.name || sym)}</a><span class="sym">$${sym}</span>
           </div>

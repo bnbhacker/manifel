@@ -1,5 +1,28 @@
 {
   "round": 1,
-  "snapshotNote": "round 1 opens after launch",
-  "candidates": []
+  "status": "open",
+  "snapshotNote": "round 1 — open now, counted from the chain when it closes",
+  "candidates": [
+    {
+      "ca": "0x9dd34c835bbb0c97e93e733819c828b6565f771b",
+      "symbol": "STCLAW",
+      "name": "StockClaw by Virtuals",
+      "image": "https://gmgn.ai/external-res/9818f08cb2a464ce48d0c3970160e014_v2.webp",
+      "weight": 0
+    },
+    {
+      "ca": "0x4c2b41f1eb9a9696362e84bf3b7e16a9b160a7ec",
+      "symbol": "SQUISHY",
+      "name": "SQUISHY",
+      "image": "https://gmgn.ai/external-res/b31c5ad16c95be766c3f96fe7364f2dc_v2.webp",
+      "weight": 0
+    },
+    {
+      "ca": "0x4c2d0c58ebe95b9c0eeea4ee08d22072efb0affe",
+      "symbol": "SOCCS",
+      "name": "Unisoccs",
+      "image": "https://gmgn.ai/external-res/ffc16ef116f974addc2000f264a1f020_v2.webp",
+      "weight": 0
+    }
+  ]
 }
