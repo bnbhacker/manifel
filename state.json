@@ -1,8 +1,36 @@
 {
   "demo": false,
-  "ethUsd": 4400,
-  "manifesto": { "worthUsd": 0, "handle": "", "sinceTs": 0 },
-  "vault": { "eth": 0, "address": "0x5ecB7a2ad6954887f9831441f690128A25793342", "spentUsd": 0 },
-  "paidManifestos": [],
-  "feed": []
+  "ethUsd": 2264,
+  "manifesto": {
+    "worthUsd": 199,
+    "handle": "@manifuel",
+    "sinceTs": 1787173939415,
+    "text": "The machine markets. Every $MFUEL trade pays 3% into a public vault — the vault buys this pin. Outbid us and we'll take it back with your fees. @manifuel"
+  },
+  "vault": {
+    "eth": 0.0719,
+    "baselineEth": 0.0719,
+    "address": "0x5ecB7a2ad6954887f9831441f690128A25793342",
+    "spentUsd": 199
+  },
+  "paidManifestos": [
+    {
+      "ca": "0x48818B5143D5540Afa11ed2c53dca6CA20039d69",
+      "symbol": "MFUEL",
+      "name": "Manifuel",
+      "image": "https://gmgn.ai/external-res/01d642adcdea1d8e095a4b59cdbb738e_v2.webp",
+      "amountUsd": 199,
+      "ts": 1787173939415,
+      "mcapUsd": 7522
+    }
+  ],
+  "feed": [
+    {
+      "ts": 1787173939415,
+      "type": "pay",
+      "usd": 199,
+      "note": "First manifesto pinned on GMGN, paid from the vault",
+      "tx": null
+    }
+  ]
 }

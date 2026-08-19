@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MANIFEL — every trade feeds the Manifesto</title>
-<meta name="description" content="MANIFEL is a token on Robinhood Chain. Its 3% tax fills a public vault. The vault buys the token's own GMGN Manifesto — again and again, louder each time.">
+<title>Manifuel — every trade feeds the Manifesto</title>
+<meta name="description" content="Manifuel is a token on Robinhood Chain. Its 3% tax fills a public vault. The vault buys the token's own GMGN Manifesto — again and again, louder each time.">
 <link rel="canonical" href="https://manifuel.co/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://manifuel.co/">
-<meta property="og:title" content="MANIFEL — every trade feeds the Manifesto">
+<meta property="og:title" content="Manifuel — every trade feeds the Manifesto">
 <meta property="og:description" content="$MFUEL: 3% of every trade fills a public vault that buys GMGN Manifestos — for itself and for the projects the community votes for.">
 <meta property="og:image" content="https://manifuel.co/brand/banner.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -322,18 +322,18 @@
 <body>
 
 <div class="wrap top">
-  <a class="mark" href="#"><img src="brand/logo.svg" alt="MANIFEL">MANIFEL</a>
+  <a class="mark" href="#"><img src="brand/logo.svg" alt="Manifuel">MANIFUEL</a>
   <span class="spacer"></span>
   <a class="btn" href="community.html">Community <span class="soon-tag">soon</span></a>
   <a class="btn" id="link-gmgn" href="https://gmgn.ai/?chain=robinhood" target="_blank" rel="noopener">GMGN</a>
-  <a class="btn solid" id="link-buy" href="https://pools.trade" target="_blank" rel="noopener">Buy on Pons</a>
+  <a class="btn solid" id="link-buy" href="https://www.ponsfamily.com/launchpad/0x48818B5143D5540Afa11ed2c53dca6CA20039d69" target="_blank" rel="noopener">Buy on Pons</a>
 </div>
 
 <header class="hero wrap">
   <div class="eyebrow">Robinhood Chain · Pons launchpad · 3% tax</div>
   <h1>Every trade feeds<br>the <span class="g">Manifesto.</span></h1>
   <p class="lede">
-    MANIFEL is a token that markets itself. Its <b>3% tax</b> fills a public
+    Manifuel is a token that markets itself. Its <b>3% tax</b> fills a public
     vault. The vault buys the token's own <b>Manifesto on GMGN</b> — the paid,
     pinned post that GMGN broadcasts sitewide. Each one costs
     <b>+$100 over the last</b>. The louder it gets, the more it trades.
@@ -358,7 +358,7 @@
       <span id="scale-right">next level: $199</span>
     </div>
     <div class="meter-stats">
-      <span class="live">vault <b id="stat-vault">— ETH ≈ $—</b></span>
+      <span class="live">fees since last manifesto <b id="stat-vault">— ETH ≈ $—</b></span>
       <span>tax flow <b>3% of every buy &amp; sell</b></span>
       <span>standing manifesto <b id="stat-current">none yet</b></span>
     </div>
@@ -372,7 +372,7 @@
     <div class="step">
       <div class="n">01</div>
       <h3>The Tax</h3>
-      <p>Every buy and sell of MANIFEL pays <b>3%</b> to the machine.
+      <p>Every buy and sell of Manifuel pays <b>3%</b> to the machine.
          Set at launch, on-chain, <b>immutable</b> — nobody can turn it off. Not even us.</p>
     </div>
     <div class="step">
@@ -385,7 +385,7 @@
       <div class="n">03</div>
       <h3>The Outbid</h3>
       <p>A GMGN Manifesto starts at <b>$199</b>. Replacing one costs
-         <b>+$100</b> over the standing bid. When the vault fills — MANIFEL outbids
+         <b>+$100</b> over the standing bid. When the vault fills — Manifuel outbids
          its own manifesto. Paid. Pinned.</p>
     </div>
     <div class="step">
@@ -409,7 +409,7 @@
     </div>
     <div class="text" id="pinned-text">We do not market. The machine markets.
 
-Every trade is a donation to its own noise. MANIFEL buys the pin. The pin buys attention. Attention buys trades. The loop closes.
+Every trade is a donation to its own noise. Manifuel buys the pin. The pin buys attention. Attention buys trades. The loop closes.
 
 Outbid us. We'll take it back with your fee.</div>
     <div class="worth" id="pinned-worth">Worth: —</div>
@@ -457,11 +457,11 @@ Outbid us. We'll take it back with your fee.</div>
     <div class="big">Outbid us if you can.</div>
     <span class="spacer"></span>
     <div class="fine">
-      MANIFEL is a memecoin experiment on Robinhood Chain. No roadmap beyond the
+      Manifuel is a memecoin experiment on Robinhood Chain. No roadmap beyond the
       loop. Extremely volatile; most memecoins go to zero. Not financial advice.
       <br><br>
       <a href="community.html">Community (soon)</a> ·
-      <a href="https://pools.trade" target="_blank" rel="noopener">Pons</a> ·
+      <a href="https://www.ponsfamily.com/launchpad/0x48818B5143D5540Afa11ed2c53dca6CA20039d69" target="_blank" rel="noopener">Pons</a> ·
       <a href="https://gmgn.ai/?chain=robinhood" target="_blank" rel="noopener">GMGN</a> ·
       <a href="https://robinhoodchain.blockscout.com" target="_blank" rel="noopener">Explorer</a>
     </div>
@@ -477,11 +477,14 @@ Outbid us. We'll take it back with your fee.</div>
 
   /* ---- config: fill at launch ---- */
   const CONFIG = {
-    tokenCa: null,            // $MFUEL contract, set at launch
+    tokenCa: "0x48818B5143D5540Afa11ed2c53dca6CA20039d69",
     vaultAddress: "0x5ecB7a2ad6954887f9831441f690128A25793342",
+    ponsUrl: "https://www.ponsfamily.com/launchpad/0x48818B5143D5540Afa11ed2c53dca6CA20039d69",
+    curve: "0xc18a563cec0a9ed8efc8af67bd7023cd71524fc8", // bonding curve, prices the token
+    supply: 1e9,
     rpc: "https://rpc.mainnet.chain.robinhood.com",
     explorer: "https://robinhoodchain.blockscout.com",
-    fallbackEthUsd: 4400,
+    fallbackEthUsd: 2264, // only used if the price feed is unreachable
     baseLevelUsd: 199,
     stepUsd: 100,
   };
@@ -494,7 +497,7 @@ Outbid us. We'll take it back with your fee.</div>
       worthUsd: 199,
       handle: "@manifel",
       sinceTs: 1786021665107,
-      text: "We do not market. The machine markets.\n\nEvery trade is a donation to its own noise. MANIFEL buys the pin. The pin buys attention. Attention buys trades. The loop closes.\n\nOutbid us. We'll take it back with your fee.",
+      text: "We do not market. The machine markets.\n\nEvery trade is a donation to its own noise. Manifuel buys the pin. The pin buys attention. Attention buys trades. The loop closes.\n\nOutbid us. We'll take it back with your fee.",
     },
     vault: { eth: 0.0489, spentUsd: 199 },
     feed: [
@@ -502,6 +505,13 @@ Outbid us. We'll take it back with your fee.</div>
       { ts: 1786018200000, type: "deposit", usd: 205, note: "0.0466 ETH → GMGN wallet",      tx: "0x" },
       { ts: 1786004520000, type: "claim",   usd: 121, note: "Fee sweep from bonding curve",  tx: "0x" },
     ],
+  };
+
+  /* function selectors on the bonding curve */
+  const SEL = {
+    quoteReserve: "0x9da771f4",
+    tokenReserve: "0xcbcb3171",
+    creatorTaxBalance: "0xdb2bd533",
   };
 
   const $ = (id) => document.getElementById(id);
@@ -605,6 +615,9 @@ Outbid us. We'll take it back with your fee.</div>
       if (p < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
+    /* A page opened in a background tab gets no animation frames at all, so
+       the number would sit at its placeholder until the tab is focused. */
+    setTimeout(() => { el.textContent = fmtUsd(target); }, dur + 120);
   }
 
   function render(state) {
@@ -612,7 +625,14 @@ Outbid us. We'll take it back with your fee.</div>
     const worth = state.manifesto?.worthUsd || 0;
     const nextLevel = worth > 0 ? worth + CONFIG.stepUsd : CONFIG.baseLevelUsd;
     const vaultEth = state.vault?.eth || 0;
-    const vaultUsd = vaultEth * ethUsd;
+    const pendingEth = state.vault?.pendingEth || 0;
+    /* The meter counts fees earned since the last manifesto, not the whole
+       wallet: the balance left over after a payment is reserve, not progress.
+       Unswept curve fees count too, so the number doesn't jump backwards
+       every time the bot sweeps. */
+    const baselineEth = state.vault?.baselineEth || 0;
+    const feesEth = Math.max(0, vaultEth - baselineEth) + pendingEth;
+    const vaultUsd = feesEth * ethUsd;
     const toGo = Math.max(0, nextLevel - vaultUsd);
     const progress = Math.min(1, vaultUsd / nextLevel);
 
@@ -629,11 +649,12 @@ Outbid us. We'll take it back with your fee.</div>
       countUp($("togo-num"), toGo);
       $("togo-label").textContent = worth > 0 ? "to outbid our own manifesto" : "to the first manifesto";
     }
-    $("scale-left").textContent = `vault: ${fmtUsd(vaultUsd)}`;
+    $("scale-left").textContent = `collected: ${fmtUsd(vaultUsd)}`;
     $("scale-right").textContent = CONFIG.tokenCa
       ? `next level: ${fmtUsd(nextLevel)}`
       : `first manifesto: ${fmtUsd(nextLevel)}`;
-    $("stat-vault").textContent = `${fmtEth(vaultEth)} ETH ≈ ${fmtUsd(vaultUsd)}`;
+    $("stat-vault").textContent =
+      `${fmtEth(feesEth)} ETH ≈ ${fmtUsd(vaultUsd)}${pendingEth ? ` (${fmtEth(pendingEth)} awaiting sweep)` : ""}`;
     $("stat-current").textContent = worth > 0 ? `${fmtUsd(worth)} · ${state.manifesto.handle}` : "none yet";
     $("gauge").setAttribute("aria-label",
       `Vault ${fmtUsd(vaultUsd)} of ${fmtUsd(nextLevel)} needed for the next manifesto`);
@@ -686,7 +707,7 @@ Outbid us. We'll take it back with your fee.</div>
     }
 
     /* proof cards */
-    $("vault-bal").textContent = `${fmtEth(vaultEth)} ETH ≈ ${fmtUsd(vaultUsd)}`;
+    $("vault-bal").textContent = `${fmtEth(vaultEth)} ETH ≈ ${fmtUsd(vaultEth * ethUsd)}`;
     $("vault-spent").textContent = fmtUsd(state.vault?.spentUsd || 0);
     if (CONFIG.vaultAddress) {
       const a = $("vault-addr");
@@ -697,7 +718,7 @@ Outbid us. We'll take it back with your fee.</div>
       const a = $("token-addr");
       a.textContent = CONFIG.tokenCa;
       a.href = `${CONFIG.explorer}/token/${CONFIG.tokenCa}`;
-      $("link-buy").href = `https://pools.trade/t/${CONFIG.tokenCa}`;
+      $("link-buy").href = CONFIG.ponsUrl;
       $("link-gmgn").href = `https://gmgn.ai/robinhood/token/${CONFIG.tokenCa}`;
     }
 
@@ -705,17 +726,60 @@ Outbid us. We'll take it back with your fee.</div>
     renderManifestos(state);
   }
 
-  /* live vault balance straight from the chain, when configured */
+  /* ---------------- live chain reads ---------------- */
+  async function rpc(method, params) {
+    const r = await fetch(CONFIG.rpc, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+      signal: AbortSignal.timeout(12000),
+    });
+    return (await r.json()).result;
+  }
+  const wei = (hex) => (hex && hex !== "0x" ? Number(BigInt(hex)) / 1e18 : null);
+
   async function liveVaultEth() {
     if (!CONFIG.vaultAddress) return null;
+    try { return wei(await rpc("eth_getBalance", [CONFIG.vaultAddress, "latest"])); }
+    catch { return null; }
+  }
+
+  /**
+   * Fees already taxed on the curve but not yet swept into the escrow. They
+   * belong to the vault, so the meter counts them — otherwise the number
+   * lurches every time the bot sweeps.
+   */
+  async function livePendingEth() {
+    if (!CONFIG.curve) return null;
+    try { return wei(await rpc("eth_call", [{ to: CONFIG.curve, data: SEL.creatorTaxBalance }, "latest"])); }
+    catch { return null; }
+  }
+
+  /**
+   * Market cap from the bonding curve itself: price = quoteReserve /
+   * tokenReserve. No price API covers Robinhood Chain yet, and the curve is
+   * the venue setting the price anyway.
+   */
+  async function liveMcapEth() {
+    if (!CONFIG.curve) return null;
     try {
-      const r = await fetch(CONFIG.rpc, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_getBalance", params: [CONFIG.vaultAddress, "latest"] }),
+      const [q, t] = await Promise.all([
+        rpc("eth_call", [{ to: CONFIG.curve, data: SEL.quoteReserve }, "latest"]),
+        rpc("eth_call", [{ to: CONFIG.curve, data: SEL.tokenReserve }, "latest"]),
+      ]);
+      const quote = wei(q), tokens = wei(t);
+      if (!quote || !tokens) return null;
+      return (quote / tokens) * CONFIG.supply;
+    } catch { return null; }
+  }
+
+  async function liveEthUsd() {
+    try {
+      const r = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd", {
+        signal: AbortSignal.timeout(8000),
       });
       const j = await r.json();
-      return j.result ? Number(BigInt(j.result)) / 1e18 : null;
+      return j?.ethereum?.usd || null;
     } catch { return null; }
   }
 
@@ -725,13 +789,22 @@ Outbid us. We'll take it back with your fee.</div>
       const r = await fetch("./state.json", { cache: "no-store" });
       if (r.ok) state = await r.json();
     } catch { /* keep demo state */ }
-    /* Live chain balance always wins over whatever the file says; the demo
-       flag stays as the file declared it, so sample content never passes for
-       real history just because the balance is genuine. */
-    const live = await liveVaultEth();
-    if (live !== null) {
-      state.vault = state.vault || {};
-      state.vault.eth = live;
+
+    /* Chain and price feeds win over whatever the file says; the demo flag
+       stays as the file declared it, so sample content never passes for real
+       history just because the numbers around it are genuine. */
+    const [live, pending, ethUsd, mcapEth] = await Promise.all([
+      liveVaultEth(), livePendingEth(), liveEthUsd(), liveMcapEth(),
+    ]);
+    state.vault = state.vault || {};
+    if (live !== null) state.vault.eth = live;
+    if (pending !== null) state.vault.pendingEth = pending;
+    if (ethUsd) state.ethUsd = ethUsd;
+    if (mcapEth && ethUsd && Array.isArray(state.paidManifestos)) {
+      /* our own token's card gets the on-chain figure, not a stored one */
+      const own = state.paidManifestos.find(
+        (m) => m.ca && CONFIG.tokenCa && m.ca.toLowerCase() === CONFIG.tokenCa.toLowerCase());
+      if (own) own.mcapUsd = mcapEth * ethUsd;
     }
     render(state);
   }

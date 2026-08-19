@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MANIFEL Community — vote where the megaphone points</title>
-<meta name="description" content="Hold $MFUEL, vote on-chain for the token the MANIFEL vault will support with a GMGN Manifesto. One wallet, one verifiable ballot.">
+<title>Manifuel Community — vote where the megaphone points</title>
+<meta name="description" content="Hold $MFUEL, vote on-chain for the token the Manifuel vault will support with a GMGN Manifesto. One wallet, one verifiable ballot.">
 <link rel="canonical" href="https://manifuel.co/community.html">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://manifuel.co/community.html">
-<meta property="og:title" content="MANIFEL Community — vote where the megaphone points">
+<meta property="og:title" content="Manifuel Community — vote where the megaphone points">
 <meta property="og:description" content="Hold $MFUEL, vote on-chain, and the vault buys a GMGN Manifesto for the project you pick.">
 <meta property="og:image" content="https://manifuel.co/brand/banner.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -191,7 +191,7 @@
 <body>
 
 <div class="wrap top">
-  <a class="mark" href="./"><img src="brand/logo.svg" alt="MANIFEL">MANIFEL</a>
+  <a class="mark" href="./"><img src="brand/logo.svg" alt="Manifuel">MANIFUEL</a>
   <span class="spacer"></span>
   <a class="btn" href="./">The machine</a>
   <button class="btn solid" id="btn-connect" type="button">Connect wallet</button>
@@ -258,7 +258,7 @@
     <div class="step">
       <div class="n">03</div>
       <h3>The vault fires</h3>
-      <p>The winner gets a <b>GMGN Manifesto bought by the MANIFEL vault</b> —
+      <p>The winner gets a <b>GMGN Manifesto bought by the Manifuel vault</b> —
          pinned on their token page and broadcast to every open terminal.
          Our call history stays public, win or lose.</p>
     </div>
@@ -270,11 +270,11 @@
     <div class="big">Hold the token. Aim the broadcast.</div>
     <span class="spacer"></span>
     <div class="fine">
-      MANIFEL is a memecoin experiment on Robinhood Chain. Extremely volatile;
+      Manifuel is a memecoin experiment on Robinhood Chain. Extremely volatile;
       most memecoins go to zero. Not financial advice.
       <br><br>
       <a href="./">The machine</a> ·
-      <a href="https://pools.trade" target="_blank" rel="noopener">Pons</a> ·
+      <a href="https://www.ponsfamily.com/launchpad/0x48818B5143D5540Afa11ed2c53dca6CA20039d69" target="_blank" rel="noopener">Pons</a> ·
       <a href="https://gmgn.ai/?chain=robinhood" target="_blank" rel="noopener">GMGN</a>
     </div>
   </div>
@@ -288,7 +288,7 @@
 
   /* ---- config: fill at launch ---- */
   const CONFIG = {
-    tokenCa: null,          // $MFUEL contract on Robinhood Chain
+    tokenCa: "0x48818B5143D5540Afa11ed2c53dca6CA20039d69",
     ballotAddress: "0x5ecB7a2ad6954887f9831441f690128A25793342",
     chainIdHex: "0x1237",   // 4663
     chainName: "Robinhood Chain",
@@ -389,7 +389,10 @@
     lastVotes = v;
     const list = $("cand-list");
     const cands = (v && Array.isArray(v.candidates)) ? v.candidates.filter((c) => isCa(c.ca)) : [];
-    if (!cands.length) return; /* keep the empty-state block */
+    if (!cands.length) {
+      $("round-badge").textContent = "nominations open soon";
+      return; /* keep the empty-state block */
+    }
 
     const total = cands.reduce((s, c) => s + (Number(c.weight) || 0), 0) || 1;
     list.innerHTML = cands
