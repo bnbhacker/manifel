@@ -257,7 +257,7 @@
 <body>
 
 <div class="wrap top">
-  <a class="mark" href="#"><img src="brand/logo.svg" alt="">MANIFEL</a>
+  <a class="mark" href="#"><img src="brand/logo.svg" alt="MANIFEL">MANIFEL</a>
   <span class="spacer"></span>
   <a class="btn" href="community.html">Community <span class="soon-tag">soon</span></a>
   <a class="btn" id="link-gmgn" href="https://gmgn.ai/?chain=robinhood" target="_blank" rel="noopener">GMGN</a>
@@ -430,6 +430,8 @@ Outbid us. We'll take it back with your fee.</div>
   };
 
   const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const fmtUsd = (n) => "$" + Math.round(n).toLocaleString("en-US");
   const fmtEth = (n) => (Math.round(n * 1e4) / 1e4).toString();
   const fmtDate = (ts) => new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric" });
@@ -495,14 +497,18 @@ Outbid us. We'll take it back with your fee.</div>
     const feed = state.feed || [];
     if (feed.length) {
       const label = { claim: "fee claim", deposit: "deposit", pay: "manifesto paid", outbid: "outbid us" };
-      const rows = feed.map((f) => `
+      const rows = feed.map((f) => {
+        const type = /^[a-z]+$/.test(f.type) ? f.type : "event";
+        const txOk = typeof f.tx === "string" && /^0x[0-9a-fA-F]{64}$/.test(f.tx);
+        return `
         <tr>
           <td>${fmtDate(f.ts)}</td>
-          <td class="t-${f.type}">${label[f.type] || f.type}</td>
+          <td class="t-${type}">${esc(label[f.type] || f.type)}</td>
           <td>${f.usd ? fmtUsd(f.usd) : "—"}</td>
-          <td>${f.note || ""}</td>
-          <td>${f.tx && f.tx.length > 4 ? `<a href="${CONFIG.explorer}/tx/${f.tx}" target="_blank" rel="noopener">tx ↗</a>` : "—"}</td>
-        </tr>`).join("");
+          <td>${esc(f.note || "")}</td>
+          <td>${txOk ? `<a href="${CONFIG.explorer}/tx/${f.tx}" target="_blank" rel="noopener">tx ↗</a>` : "—"}</td>
+        </tr>`;
+      }).join("");
       $("log-container").innerHTML = `
         <table class="log">
           <thead><tr><th>Date</th><th>Event</th><th>Amount</th><th>Detail</th><th>Proof</th></tr></thead>

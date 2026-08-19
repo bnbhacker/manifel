@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MANIFEL Community — the megaphone becomes collective</title>
-<meta name="description" content="Phase 2 of MANIFEL: holders nominate and vote, the vault buys Manifestos and theses for the projects the community picks. Coming soon.">
+<title>MANIFEL Community — vote where the megaphone points</title>
+<meta name="description" content="Hold $MFUEL, vote on-chain for the token the MANIFEL vault will support with a GMGN Manifesto. One wallet, one verifiable ballot.">
 <link rel="icon" href="brand/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
     -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; }
-  a:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
   ::selection { background: var(--green); color: #0f1511; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
@@ -40,81 +40,121 @@
     font-weight: 800; font-size: 19px; letter-spacing: -.01em; text-decoration: none;
   }
   .mark img { width: 30px; height: 30px; border-radius: 7px; }
-  .chip {
-    font-family: var(--mono); font-size: 12px; color: var(--dim);
-    border: 1px solid var(--line); padding: 5px 10px; border-radius: 6px; white-space: nowrap;
-  }
   .top .spacer { flex: 1; }
   .btn {
-    font-weight: 700; font-size: 13.5px; text-decoration: none; display: inline-block;
+    font-family: var(--sans); font-weight: 700; font-size: 13.5px;
+    text-decoration: none; display: inline-block;
     padding: 10px 16px; border-radius: 8px;
     border: 1px solid var(--line); color: var(--text); background: transparent;
-    transition: background .15s, color .15s, border-color .15s;
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s, opacity .15s;
   }
   .btn:hover { border-color: var(--dim); }
   .btn.solid { background: var(--green); border-color: var(--green); color: #0f1511; }
   .btn.solid:hover { background: var(--green-light); border-color: var(--green-light); }
+  .btn[disabled] { opacity: .45; cursor: not-allowed; }
+  .btn[disabled]:hover { border-color: var(--line); background: var(--green); }
+  .btn.solid[disabled]:hover { background: var(--green); }
 
-  .hero { padding: 64px 0 32px; }
+  .hero { padding: 64px 0 24px; }
   .eyebrow {
     font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em;
     color: var(--green); margin-bottom: 18px;
   }
   h1 {
     font-weight: 800; letter-spacing: -.02em;
-    font-size: clamp(36px, 5.6vw, 64px); line-height: 1.06; max-width: 15em;
+    font-size: clamp(34px, 5.4vw, 60px); line-height: 1.06; max-width: 15em;
   }
   h1 .g { color: var(--green); }
-  .hero p.lede { margin-top: 22px; max-width: 620px; color: var(--dim); font-size: 15.5px; }
+  .hero p.lede { margin-top: 22px; max-width: 640px; color: var(--dim); font-size: 15.5px; }
   .hero p.lede b { color: var(--text); font-weight: 600; }
 
-  .soon-panel {
-    margin-top: 48px;
-    background: var(--panel); border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: clamp(26px, 4.5vw, 44px);
-    display: flex; flex-wrap: wrap; align-items: center; gap: 18px 40px;
-  }
-  .soon-panel .big {
-    font-family: var(--mono); font-weight: 700;
-    font-size: clamp(34px, 6vw, 56px); line-height: 1.05;
-    color: var(--green-light); letter-spacing: -.02em;
-  }
-  .soon-panel .sub { font-size: 14px; color: var(--dim); max-width: 420px; }
-  .soon-chip {
-    font-family: var(--mono); font-size: 12px;
-    background: var(--green-tint); color: var(--green-light);
-    padding: 4px 10px; border-radius: 5px;
-  }
-
-  section { padding: 72px 0 0; }
+  section { padding: 64px 0 0; }
   .sec-label {
     font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em;
     color: var(--green); margin-bottom: 14px;
   }
   h2 {
     font-weight: 800; letter-spacing: -.02em;
-    font-size: clamp(26px, 3.6vw, 38px); line-height: 1.1; margin-bottom: 28px;
+    font-size: clamp(24px, 3.4vw, 36px); line-height: 1.1; margin-bottom: 26px;
   }
 
-  .loop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  /* wallet / status card */
+  .wallet-card {
+    margin-top: 40px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: clamp(22px, 3.5vw, 32px);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px;
+  }
+  .wallet-card .info { flex: 1; min-width: 240px; }
+  .wallet-card .title { font-weight: 700; font-size: 16.5px; }
+  .wallet-card .sub { font-size: 13.5px; color: var(--dim); margin-top: 4px; }
+  .wallet-card .sub b { color: var(--text); font-weight: 600; }
+  .wallet-card .addr { font-family: var(--mono); font-size: 12.5px; color: var(--green-light); }
+  .badge {
+    font-family: var(--mono); font-size: 12px;
+    background: var(--green-tint); color: var(--green-light);
+    padding: 4px 10px; border-radius: 5px; white-space: nowrap;
+  }
+
+  /* candidates */
+  .round-head {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px;
+    margin-bottom: 18px;
+  }
+  .round-head .meta { font-family: var(--mono); font-size: 12.5px; color: var(--dim); }
+  .cand-list { display: flex; flex-direction: column; gap: 10px; }
+  .cand {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 20px;
+    display: grid; grid-template-columns: 1fr auto; gap: 6px 18px; align-items: center;
+  }
+  .cand .name { font-weight: 700; font-size: 15.5px; }
+  .cand .name .sym { color: var(--green-light); font-family: var(--mono); font-size: 13px; margin-left: 8px; }
+  .cand .ca {
+    font-family: var(--mono); font-size: 11.5px; color: var(--dim);
+    word-break: break-all;
+  }
+  .cand .ca a { color: var(--dim); text-decoration: none; }
+  .cand .ca a:hover { color: var(--text); }
+  .cand .votebox { grid-row: span 2; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .cand .pct { font-family: var(--mono); font-weight: 700; font-size: 18px; color: var(--green-light); }
+  .cand .bar {
+    grid-column: 1 / -1;
+    height: 8px; border-radius: 4px; background: var(--panel-2);
+    overflow: hidden;
+  }
+  .cand .bar i {
+    display: block; height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--green-light));
+    border-radius: 4px;
+  }
+  .cand-empty {
+    border: 1px dashed var(--line); border-radius: 12px;
+    padding: 30px; color: var(--dim); font-size: 14px;
+  }
+
+  /* how it works */
+  .loop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .loop .step {
     background: var(--panel); border: 1px solid var(--line);
     border-radius: 12px; padding: 22px 20px 24px;
   }
-  .step .n {
-    font-family: var(--mono); font-weight: 700; font-size: 13px;
-    color: var(--green); margin-bottom: 12px;
-  }
+  .step .n { font-family: var(--mono); font-weight: 700; font-size: 13px; color: var(--green); margin-bottom: 12px; }
   .step h3 { font-weight: 700; font-size: 16.5px; margin-bottom: 8px; }
   .step p { font-size: 13.5px; color: var(--dim); }
   .step p b { color: var(--text); font-weight: 600; }
+  .step p code {
+    font-family: var(--mono); font-size: 12px;
+    background: var(--panel-2); padding: 1px 6px; border-radius: 4px;
+    color: var(--green-light); word-break: break-all;
+  }
 
   .note {
-    margin-top: 72px;
+    margin-top: 28px;
     border: 1px dashed var(--line); border-radius: 12px;
-    padding: 26px; max-width: 780px;
-    color: var(--dim); font-size: 14px;
+    padding: 24px; max-width: 780px;
+    color: var(--dim); font-size: 13.5px;
   }
   .note b { color: var(--text); font-weight: 600; }
 
@@ -123,88 +163,98 @@
     padding-top: 40px; padding-bottom: 44px;
     display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: flex-start;
   }
-  footer .big { font-weight: 800; font-size: clamp(22px, 3vw, 30px); letter-spacing: -.01em; }
+  footer .big { font-weight: 800; font-size: clamp(20px, 2.8vw, 28px); letter-spacing: -.01em; }
   footer .fine { font-size: 12.5px; color: var(--dim); max-width: 400px; }
   footer .fine a { color: var(--green-light); text-decoration: none; }
   footer .fine a:hover { text-decoration: underline; }
   footer .spacer { flex: 1; }
 
-  @media (max-width: 900px) { .loop { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) {
-    .loop { grid-template-columns: 1fr; }
-    .top { flex-wrap: wrap; }
+  .toast {
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    color: var(--text); font-size: 13.5px;
+    padding: 12px 18px; max-width: 90vw;
+    display: none; z-index: 60;
   }
+
+  @media (max-width: 760px) { .loop { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .top { flex-wrap: wrap; } }
 </style>
 </head>
 <body>
 
 <div class="wrap top">
-  <a class="mark" href="./"><img src="brand/logo.svg" alt="">MANIFEL</a>
-  <span class="chip">Phase 2</span>
+  <a class="mark" href="./"><img src="brand/logo.svg" alt="MANIFEL">MANIFEL</a>
   <span class="spacer"></span>
   <a class="btn" href="./">The machine</a>
-  <a class="btn solid" href="https://x.com/" target="_blank" rel="noopener">Follow on X</a>
+  <button class="btn solid" id="btn-connect" type="button">Connect wallet</button>
 </div>
 
 <header class="hero wrap">
-  <div class="eyebrow">Community · opens after launch</div>
-  <h1>The megaphone<br>becomes <span class="g">collective.</span></h1>
+  <div class="eyebrow">Community · one wallet, one on-chain ballot</div>
+  <h1>Vote where the<br>megaphone <span class="g">points.</span></h1>
   <p class="lede">
-    A machine that only shouts its own name is a toy. Phase 2 points it
-    outward: <b>MANIFEL holders aim the vault</b>. The community nominates
-    tokens and projects that deserve eyes — and the machine buys them
-    <b>Manifestos and public theses</b> on GMGN. Sitewide broadcast, bought by
-    the vault, aimed by you.
+    The vault doesn't only talk about itself. <b>$MFUEL holders</b> pick the
+    next token the machine supports — the winner gets a <b>GMGN Manifesto
+    bought by our vault</b>, broadcast sitewide. Voting happens on-chain:
+    no forms, no backend, every ballot is a transaction anyone can audit.
   </p>
 
-  <div class="soon-panel">
-    <div>
-      <div class="big">Coming soon</div>
-      <div class="sub" style="margin-top:10px">Nominations and voting open once
-        the launch stabilizes. Early holders shape the first calls.</div>
+  <div class="wallet-card">
+    <div class="info">
+      <div class="title" id="w-title">Your voting power</div>
+      <div class="sub" id="w-sub">Connect a wallet on Robinhood Chain to see your
+        <b>$MFUEL</b> balance — that's the weight of your vote.</div>
+      <div class="addr" id="w-addr"></div>
     </div>
-    <span class="spacer" style="flex:1"></span>
-    <span class="soon-chip">not yet armed</span>
+    <span class="badge" id="round-badge">voting opens at launch</span>
   </div>
 </header>
 
+<section class="wrap" id="round">
+  <div class="sec-label">current round</div>
+  <div class="round-head">
+    <h2 id="round-title">Candidates</h2>
+    <span class="meta" id="round-meta"></span>
+  </div>
+  <div class="cand-list" id="cand-list">
+    <div class="cand-empty">Nominations open after launch. The first round is
+      seeded from community suggestions in our X replies.</div>
+  </div>
+  <div class="note" id="vote-note">
+    <b>How a ballot works:</b> voting sends a <b>0 ETH</b> transaction on
+    Robinhood Chain to the vault address with the candidate's contract in the
+    data field. Gas costs a fraction of a cent. The tally weighs each wallet by
+    its $MFUEL balance at the round snapshot — one wallet counts once, moving
+    tokens after the snapshot changes nothing. Every vote is public,
+    every count is reproducible from the chain.
+  </div>
+</section>
+
 <section class="wrap">
-  <div class="sec-label">how it will work</div>
-  <h2>Aim. Fire. Prove it.</h2>
+  <div class="sec-label">how it works</div>
+  <h2>Hold. Vote. Broadcast.</h2>
   <div class="loop">
     <div class="step">
       <div class="n">01</div>
-      <h3>Nominate</h3>
-      <p>Holders put forward tokens and projects worth hearing about —
-         the <b>undervalued, the early, the ignored</b>. Any chain GMGN covers.</p>
+      <h3>Hold $MFUEL</h3>
+      <p>Your balance is your voting weight at the round snapshot.
+         <b>No staking, no locking</b> — just hold.</p>
     </div>
     <div class="step">
       <div class="n">02</div>
-      <h3>Vote</h3>
-      <p>Weight by MANIFEL held. <b>The bags decide</b> — no committees,
-         no backroom deals, votes in the open.</p>
+      <h3>Cast an on-chain ballot</h3>
+      <p>Pick a candidate and confirm a <b>0 ETH transaction</b> carrying
+         <code>MFUEL:VOTE:&lt;token&gt;</code>. That's the whole vote —
+         public, permanent, auditable.</p>
     </div>
     <div class="step">
       <div class="n">03</div>
-      <h3>Fire</h3>
-      <p>The vault buys the pick a <b>Manifesto</b> or posts a <b>thesis</b> —
-         a public Callout with real skin. GMGN broadcasts it sitewide,
-         from the MANIFEL account.</p>
+      <h3>The vault fires</h3>
+      <p>The winner gets a <b>GMGN Manifesto bought by the MANIFEL vault</b> —
+         pinned on their token page and broadcast to every open terminal.
+         Our call history stays public, win or lose.</p>
     </div>
-    <div class="step">
-      <div class="n">04</div>
-      <h3>Prove it</h3>
-      <p>Every call is public and permanent. GMGN tracks caller hit rates and
-         multiples on a leaderboard — our <b>track record stays in the open</b>,
-         win or lose.</p>
-    </div>
-  </div>
-
-  <div class="note">
-    <b>Why projects will want this:</b> a Manifesto from MANIFEL is not a paid
-    shill from a burner — it's a broadcast from a syndicate whose every past
-    call is auditable. If the record is good, the megaphone compounds. Holding
-    MANIFEL is holding a share of the loudest accountable voice in the terminal.
   </div>
 </section>
 
@@ -223,5 +273,153 @@
   </div>
 </footer>
 
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  /* ---- config: fill at launch ---- */
+  const CONFIG = {
+    tokenCa: null,          // $MFUEL contract on Robinhood Chain
+    ballotAddress: null,    // vault address — ballots are 0-ETH txs to it
+    chainIdHex: "0x1237",   // 4663
+    chainName: "Robinhood Chain",
+    rpc: "https://rpc.mainnet.chain.robinhood.com",
+    explorer: "https://robinhoodchain.blockscout.com",
+  };
+
+  const VOTE_PREFIX = "MFUEL:VOTE:";
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const isCa = (s) => typeof s === "string" && /^0x[0-9a-fA-F]{40}$/.test(s);
+  const live = () => !!(CONFIG.tokenCa && CONFIG.ballotAddress);
+
+  let account = null;
+
+  function toast(msg) {
+    const t = $("toast");
+    t.textContent = msg;
+    t.style.display = "block";
+    clearTimeout(toast._h);
+    toast._h = setTimeout(() => { t.style.display = "none"; }, 5000);
+  }
+
+  /* ---------- wallet ---------- */
+  async function ensureChain(eth) {
+    try {
+      await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: CONFIG.chainIdHex }] });
+    } catch (e) {
+      if (e && e.code === 4902) {
+        await eth.request({
+          method: "wallet_addEthereumChain",
+          params: [{
+            chainId: CONFIG.chainIdHex, chainName: CONFIG.chainName,
+            nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+            rpcUrls: [CONFIG.rpc], blockExplorerUrls: [CONFIG.explorer],
+          }],
+        });
+      } else { throw e; }
+    }
+  }
+
+  async function mfuelBalance(addr) {
+    if (!CONFIG.tokenCa) return null;
+    const data = "0x70a08231" + addr.toLowerCase().replace("0x", "").padStart(64, "0");
+    const res = await window.ethereum.request({
+      method: "eth_call",
+      params: [{ to: CONFIG.tokenCa, data }, "latest"],
+    });
+    return Number(BigInt(res)) / 1e18;
+  }
+
+  async function connect() {
+    if (!window.ethereum) { toast("No wallet found — install MetaMask or Rabby, then retry."); return; }
+    try {
+      const accs = await window.ethereum.request({ method: "eth_requestAccounts" });
+      account = accs[0];
+      await ensureChain(window.ethereum);
+      $("btn-connect").textContent = account.slice(0, 6) + "…" + account.slice(-4);
+      $("w-addr").textContent = account;
+      if (live()) {
+        const bal = await mfuelBalance(account);
+        $("w-sub").innerHTML = `Voting weight: <b>${bal === null ? "—" : Math.floor(bal).toLocaleString("en-US")} $MFUEL</b>`;
+        if (bal !== null && bal <= 0) $("w-sub").innerHTML += ` — hold $MFUEL to make your ballot count.`;
+      } else {
+        $("w-sub").innerHTML = `Wallet connected. <b>$MFUEL isn't live yet</b> — voting weight appears after launch.`;
+      }
+      renderCands(lastVotes); /* re-render to enable buttons */
+    } catch (e) {
+      toast("Connection cancelled or failed.");
+    }
+  }
+
+  /* ---------- voting ---------- */
+  async function vote(ca) {
+    if (!live()) { toast("Voting opens at launch."); return; }
+    if (!account) { await connect(); if (!account) return; }
+    try {
+      await ensureChain(window.ethereum);
+      const payload = VOTE_PREFIX + ca.toLowerCase();
+      const hex = "0x" + [...new TextEncoder().encode(payload)]
+        .map((b) => b.toString(16).padStart(2, "0")).join("");
+      const tx = await window.ethereum.request({
+        method: "eth_sendTransaction",
+        params: [{ from: account, to: CONFIG.ballotAddress, value: "0x0", data: hex }],
+      });
+      toast("Ballot sent. It will appear in the tally within a few minutes.");
+      console.log("vote tx:", tx);
+    } catch (e) {
+      toast("Vote cancelled or failed.");
+    }
+  }
+
+  /* ---------- candidates ---------- */
+  let lastVotes = null;
+
+  function renderCands(v) {
+    lastVotes = v;
+    const list = $("cand-list");
+    const cands = (v && Array.isArray(v.candidates)) ? v.candidates.filter((c) => isCa(c.ca)) : [];
+    if (!cands.length) return; /* keep the empty-state block */
+
+    const total = cands.reduce((s, c) => s + (Number(c.weight) || 0), 0) || 1;
+    list.innerHTML = cands
+      .slice()
+      .sort((a, b) => (Number(b.weight) || 0) - (Number(a.weight) || 0))
+      .map((c) => {
+        const pct = Math.round(((Number(c.weight) || 0) / total) * 100);
+        return `
+        <div class="cand">
+          <div class="name">${esc(c.name || c.symbol || "?")}<span class="sym">$${esc(c.symbol || "?")}</span></div>
+          <div class="votebox">
+            <span class="pct">${pct}%</span>
+            <button class="btn solid" data-ca="${c.ca}" ${live() ? "" : "disabled"} type="button">Vote</button>
+          </div>
+          <div class="ca"><a href="${CONFIG.explorer}/token/${c.ca}" target="_blank" rel="noopener">${c.ca}</a></div>
+          <div class="bar"><i style="width:${pct}%"></i></div>
+        </div>`;
+      }).join("");
+
+    list.querySelectorAll("button[data-ca]").forEach((b) =>
+      b.addEventListener("click", () => vote(b.dataset.ca)));
+
+    if (v.round) $("round-title").textContent = `Round ${v.round}`;
+    if (v.snapshotNote) $("round-meta").textContent = v.snapshotNote;
+    $("round-badge").textContent = live() ? "voting live" : "demo — voting opens at launch";
+  }
+
+  async function boot() {
+    $("btn-connect").addEventListener("click", connect);
+    try {
+      const r = await fetch("./votes.json", { cache: "no-store" });
+      if (r.ok) renderCands(await r.json());
+    } catch { /* keep empty state */ }
+  }
+
+  boot();
+})();
+</script>
 </body>
 </html>
