@@ -47,11 +47,6 @@
     text-decoration: none;
   }
   .mark img { width: 30px; height: 30px; border-radius: 7px; }
-  .chip {
-    font-family: var(--mono); font-size: 12px; color: var(--dim);
-    border: 1px solid var(--line); padding: 5px 10px; border-radius: 6px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40vw;
-  }
   .top .spacer { flex: 1; }
   .btn {
     font-family: var(--sans); font-weight: 700; font-size: 13.5px;
@@ -69,21 +64,6 @@
     font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
     background: var(--green-tint); color: var(--green-light); border-radius: 4px;
   }
-
-  /* ---------- marquee ---------- */
-  .marquee {
-    background: var(--panel);
-    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-    overflow: hidden; white-space: nowrap;
-  }
-  .marquee-track {
-    display: inline-block; white-space: nowrap; padding: 8px 0;
-    font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em;
-    color: var(--green-light);
-    animation: slide 30s linear infinite;
-  }
-  .marquee-track span { margin-right: 3.5em; }
-  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* ---------- hero ---------- */
   .hero { padding: 64px 0 32px; }
@@ -268,7 +248,6 @@
     .chip { max-width: 100%; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .marquee-track { animation: none; }
     .gauge-fill { transition: none; }
     .meter-stats .live::before { animation: none; }
     html { scroll-behavior: auto; }
@@ -279,15 +258,10 @@
 
 <div class="wrap top">
   <a class="mark" href="#"><img src="brand/logo.svg" alt="">MANIFEL</a>
-  <span class="chip" id="ca-chip">CA: TBD — launching on pools.trade</span>
   <span class="spacer"></span>
   <a class="btn" href="community.html">Community <span class="soon-tag">soon</span></a>
   <a class="btn" id="link-gmgn" href="https://gmgn.ai/?chain=robinhood" target="_blank" rel="noopener">GMGN</a>
   <a class="btn solid" id="link-buy" href="https://pools.trade" target="_blank" rel="noopener">Buy on pools.trade</a>
-</div>
-
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track" id="marquee-track"></div>
 </div>
 
 <header class="hero wrap">
@@ -461,20 +435,6 @@ Outbid us. We'll take it back with your fee.</div>
   const fmtDate = (ts) => new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric" });
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* marquee content */
-  function setMarquee(state) {
-    const worth = state.manifesto?.worthUsd || 0;
-    const items = worth > 0
-      ? [`「${fmtUsd(worth)} MANIFESTO」 of MANIFEL from ${state.manifesto.handle}`,
-         "every trade feeds the Manifesto",
-         `next level ${fmtUsd(worth + CONFIG.stepUsd)}`]
-      : ["every trade feeds the Manifesto",
-         `first manifesto at ${fmtUsd(CONFIG.baseLevelUsd)}`,
-         "3% tax · public vault · sitewide broadcast"];
-    const half = items.map((s) => `<span>${s} ✦</span>`).join("");
-    $("marquee-track").innerHTML = half + half; /* duplicated for seamless loop */
-  }
-
   /* count-up for the big number */
   function countUp(el, target) {
     if (reduced || document.hidden) { el.textContent = fmtUsd(target); return; }
@@ -562,13 +522,11 @@ Outbid us. We'll take it back with your fee.</div>
       const a = $("token-addr");
       a.textContent = CONFIG.tokenCa;
       a.href = `${CONFIG.explorer}/token/${CONFIG.tokenCa}`;
-      $("ca-chip").textContent = `CA: ${CONFIG.tokenCa}`;
       $("link-buy").href = `https://pools.trade/t/${CONFIG.tokenCa}`;
       $("link-gmgn").href = `https://gmgn.ai/robinhood/token/${CONFIG.tokenCa}`;
     }
 
     $("demo-badge").style.display = state.demo ? "block" : "none";
-    setMarquee(state);
   }
 
   /* live vault balance straight from the chain, when configured */
