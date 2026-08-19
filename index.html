@@ -182,6 +182,63 @@
     color: var(--green-light);
   }
 
+  /* manifesto history */
+  .mh { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .mh-card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 18px;
+    display: grid; grid-template-columns: 44px 1fr auto; gap: 6px 14px;
+    align-items: center;
+    transition: border-color .15s;
+  }
+  .mh-card:hover { border-color: rgba(105, 207, 141, .35); }
+  .mh-ava {
+    grid-row: span 2;
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--green-tint); color: var(--green-light);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 18px;
+    overflow: hidden;
+  }
+  .mh-ava img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mh-name { font-weight: 700; font-size: 15px; min-width: 0; }
+  .mh-name a { text-decoration: none; }
+  .mh-name a:hover { color: var(--green-light); }
+  .mh-name .sym { color: var(--green-light); font-family: var(--mono); font-size: 12.5px; margin-left: 7px; }
+  .mh-paid {
+    text-align: right;
+    font-family: var(--mono); font-size: 13px; color: var(--text); font-weight: 700;
+    white-space: nowrap;
+  }
+  .mh-paid small { display: block; color: var(--dim); font-weight: 400; font-size: 11.5px; }
+  .mh-meta {
+    grid-column: 2 / -1;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px;
+    font-family: var(--mono); font-size: 12px; color: var(--dim); min-width: 0;
+  }
+  .mh-meta .mcap b { color: var(--text); font-weight: 700; }
+  .mh-ca {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--panel-2); border: 1px solid transparent;
+    color: var(--dim); font-family: var(--mono); font-size: 11.5px;
+    padding: 3px 8px; border-radius: 6px; cursor: pointer;
+    transition: color .15s, border-color .15s;
+  }
+  .mh-ca:hover { color: var(--green-light); border-color: rgba(105, 207, 141, .35); }
+  .mh-ca svg { flex: none; }
+  .mh-empty {
+    border: 1px dashed var(--line); border-radius: 12px;
+    padding: 30px; color: var(--dim); font-size: 14px;
+  }
+
+  .toast {
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    color: var(--text); font-size: 13.5px;
+    padding: 12px 18px; max-width: 90vw;
+    display: none; z-index: 60;
+  }
+
   /* war log */
   .log-wrap { overflow-x: auto; }
   table.log { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 640px; }
@@ -241,6 +298,7 @@
   @media (max-width: 900px) {
     .loop { grid-template-columns: 1fr 1fr; }
     .cards { grid-template-columns: 1fr; }
+    .mh { grid-template-columns: 1fr; }
   }
   @media (max-width: 560px) {
     .loop { grid-template-columns: 1fr; }
@@ -351,6 +409,15 @@ Outbid us. We'll take it back with your fee.</div>
   </div>
 </section>
 
+<section class="wrap" id="history">
+  <div class="sec-label">manifesto history</div>
+  <h2>Manifestos we bought</h2>
+  <div class="mh" id="mh-list">
+    <div class="mh-empty">Nothing yet. The first manifesto — our own, $199 —
+      drops at launch; community picks follow.</div>
+  </div>
+</section>
+
 <section class="wrap" id="warlog">
   <div class="sec-label">war log</div>
   <h2>Battles for the pin</h2>
@@ -395,6 +462,7 @@ Outbid us. We'll take it back with your fee.</div>
 </footer>
 
 <div class="demo-badge" id="demo-badge">demo data</div>
+<div class="toast" id="toast"></div>
 
 <script>
 (() => {
@@ -436,6 +504,88 @@ Outbid us. We'll take it back with your fee.</div>
   const fmtEth = (n) => (Math.round(n * 1e4) / 1e4).toString();
   const fmtDate = (ts) => new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric" });
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const fmtMcap = (n) => {
+    if (!n || !isFinite(n)) return "—";
+    if (n >= 1e9) return "$" + (n / 1e9).toFixed(2) + "B";
+    if (n >= 1e6) return "$" + (n / 1e6).toFixed(2) + "M";
+    if (n >= 1e3) return "$" + (n / 1e3).toFixed(1) + "K";
+    return "$" + Math.round(n);
+  };
+
+  function toast(msg) {
+    const t = $("toast");
+    t.textContent = msg;
+    t.style.display = "block";
+    clearTimeout(toast._h);
+    toast._h = setTimeout(() => { t.style.display = "none"; }, 3000);
+  }
+
+  async function copyCa(ca) {
+    try {
+      await navigator.clipboard.writeText(ca);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = ca; document.body.appendChild(ta);
+      ta.select(); document.execCommand("copy"); ta.remove();
+    }
+    toast("Contract copied: " + ca.slice(0, 10) + "…");
+  }
+
+  /* best-effort live market cap; falls back to the bot-written value */
+  async function liveMcap(ca) {
+    try {
+      const r = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${ca}`, {
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!r.ok) return null;
+      const j = await r.json();
+      const p = (j.pairs || []).sort((a, b) => (b.liquidity?.usd || 0) - (a.liquidity?.usd || 0))[0];
+      return p ? Number(p.marketCap || p.fdv) || null : null;
+    } catch { return null; }
+  }
+
+  const COPY_ICON = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>`;
+
+  function renderManifestos(state) {
+    const items = (state.paidManifestos || []).filter((m) => /^0x[0-9a-fA-F]{40}$/.test(m.ca || ""));
+    if (!items.length) return; /* keep the empty-state block */
+
+    const list = $("mh-list");
+    list.innerHTML = items
+      .slice()
+      .sort((a, b) => (b.ts || 0) - (a.ts || 0))
+      .map((m, i) => {
+        const sym = esc(m.symbol || "?");
+        const gmgn = `https://gmgn.ai/robinhood/token/${m.ca}`;
+        const ava = m.image
+          ? `<img src="${esc(m.image)}" alt="" loading="lazy" onerror="this.remove()">`
+          : "";
+        return `
+        <div class="mh-card">
+          <div class="mh-ava">${ava}<span>${sym.slice(0, 1).toUpperCase()}</span></div>
+          <div class="mh-name">
+            <a href="${gmgn}" target="_blank" rel="noopener">${esc(m.name || sym)}</a><span class="sym">$${sym}</span>
+          </div>
+          <div class="mh-paid">${fmtUsd(m.amountUsd || 0)}<small>manifesto · ${m.ts ? fmtDate(m.ts) : "—"}</small></div>
+          <div class="mh-meta">
+            <span class="mcap">mcap <b id="mh-mcap-${i}">${fmtMcap(m.mcapUsd)}</b></span>
+            <button class="mh-ca" type="button" data-ca="${m.ca}" title="Copy contract">
+              ${COPY_ICON}${m.ca.slice(0, 6)}…${m.ca.slice(-4)}
+            </button>
+          </div>
+        </div>`;
+      }).join("");
+
+    list.querySelectorAll(".mh-ca").forEach((b) =>
+      b.addEventListener("click", () => copyCa(b.dataset.ca)));
+
+    /* refresh mcaps live where a source responds */
+    items.forEach(async (m, i) => {
+      const v = await liveMcap(m.ca);
+      if (v) { const el = $(`mh-mcap-${i}`); if (el) el.textContent = fmtMcap(v); }
+    });
+  }
 
   /* count-up for the big number */
   function countUp(el, target) {
@@ -533,6 +683,7 @@ Outbid us. We'll take it back with your fee.</div>
     }
 
     $("demo-badge").style.display = state.demo ? "block" : "none";
+    renderManifestos(state);
   }
 
   /* live vault balance straight from the chain, when configured */
